@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="favicon.png?v=5"><link rel="stylesheet" href="site-page.css">
+  <title>Updates - Meow Bot</title>
+  <script>(function(){var t=localStorage.getItem('meow-bot-theme');if(['light','dark','pure-dark'].indexOf(t)===-1)t='dark';document.documentElement.setAttribute('data-theme',t);}());</script>
+</head>
+<body class="updates-page">
+  <nav class="site-shell nav" id="siteNav" aria-label="Primary navigation"><a class="brand" href="/"><img src="favicon.png?v=5" alt="Meow Bot logo"><span>Meow Bot</span></a><div class="nav-links"><a href="/commands">Commands</a><a href="/games">Games</a><a href="/updates" class="is-active">Updates</a><a href="/premium">Premium</a><a href="/support">Support</a><a href="/legal">Legal</a></div><div class="nav-actions"><button class="menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu">=</button><button class="theme-toggle" id="themeToggle" type="button">Pure dark</button><a class="button-primary" data-app-link="invite" href="https://discord.com/oauth2/authorize?client_id=1488940777190199386" target="_blank" rel="noopener noreferrer">Invite Bot</a></div></nav>
+  <main class="site-shell">
+    <section class="page-hero"><div><div class="eyebrow">Live feed</div><h1>Updates from <span>the bot.</span></h1><p class="lead">Release notes and announcements are pulled directly from Meow Bot's saved feed, so public changelogs and notices stay in sync with the owner tools.</p><div class="updates-toggle-bar" role="tablist" aria-label="Updates feed selector"><button class="updates-toggle-button is-active" type="button" data-updates-view="announcements" aria-pressed="true">Announcements</button><button class="updates-toggle-button" type="button" data-updates-view="changelogs" aria-pressed="false">Changelogs</button></div></div><aside class="mascot-card"><img src="1.png" alt="Sleeping cat mascot"></aside></section>
+
+    <section class="section updates-section-block" id="updatesSectionChangelogs">
+      <div class="updates-section-head"><div class="section-kicker">Release notes</div><h2 class="updates-section-title">Changelogs</h2><p class="updates-section-copy">Product changes, fixes, and feature rollout notes posted through Meow Bot.</p></div>
+      <div class="updates-featured" id="changelogsFeatured"><article class="update-item soft is-featured"><h3>Loading changelogs...</h3><p>The site is fetching the latest saved changelog entries from the bot.</p></article></div>
+      <div class="update-list" id="changelogsFeed"></div>
+      <div class="updates-pagination" id="changelogsPagination" aria-label="Changelog pagination"></div>
+    </section>
+
+    <section class="section updates-section-block is-active" id="updatesSectionAnnouncements">
+      <div class="updates-section-head"><div class="section-kicker">Public notices</div><h2 class="updates-section-title">Announcements</h2><p class="updates-section-copy">Broadcasts, event notices, maintenance heads-up posts, and other public updates.</p></div>
+      <div class="updates-featured" id="announcementsFeatured"><article class="update-item warm is-featured"><h3>Loading announcements...</h3><p>The site is fetching the latest saved announcements from the bot.</p></article></div>
+      <div class="update-list" id="announcementsFeed"></div>
+      <div class="updates-pagination" id="announcementsPagination" aria-label="Announcement pagination"></div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-col"><a class="brand" href="/"><img src="favicon.png?v=5" alt="Meow Bot logo"><span>Meow Bot</span></a><p>Cat personality, server games, pets, economy, and community tools for Discord.</p><div class="social-row"><a class="social-link" data-app-link="discord" href="https://discord.gg/8aeWmjAd" target="_blank" rel="noopener noreferrer">D</a><a class="social-link" data-app-link="vote" href="https://top.gg/bot/1488940777190199386" target="_blank" rel="noopener noreferrer">T</a><a class="social-link" data-app-link="support" href="https://www.patreon.com/cw/FluffyThePenguin/membership" target="_blank" rel="noopener noreferrer">P</a></div></div>
+      <div class="footer-col"><strong>Product</strong><a href="/commands">Commands</a><a href="/games">Games</a><a href="/updates">Updates</a><a href="/premium">Premium</a><a href="/#features">Features</a></div>
+      <div class="footer-col"><strong>Resources</strong><a href="/support">Setup Help</a><a href="/commands">Command Directory</a><a href="/#faq">FAQ</a><a data-app-link="discord" href="https://discord.gg/8aeWmjAd" target="_blank" rel="noopener noreferrer">Support Server</a></div>
+      <div class="footer-col"><strong>Community</strong><a data-app-link="discord" href="https://discord.gg/8aeWmjAd" target="_blank" rel="noopener noreferrer">Discord</a><a data-app-link="vote" href="https://top.gg/bot/1488940777190199386" target="_blank" rel="noopener noreferrer">Vote on Top.gg</a><a href="/premium">Support Development</a></div>
+      <div class="footer-col"><strong>Company</strong><a href="/support">Contact</a><a href="/premium">Support</a><a href="/#home">About Meow Bot</a></div>
+      <div class="footer-col"><strong>Legal</strong><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/support">Contact</a></div>
+      <div class="footer-bottom"><span>© 2026 Meow Bot. All rights reserved.</span><span>Made for Discord communities that like cats and chaos.</span></div>
+    </footer>
+  </main>
+  <script src="site-page.js"></script>
+  <script>
+    (function () {
+      var updateSections = {
+        changelogs: { items: [], page: 0, pageSize: 8, expanded: Object.create(null), emptyTitle: "No changelogs yet", emptyMessage: "New changelog entries will appear here automatically once they are posted from the bot." },
+        announcements: { items: [], page: 0, pageSize: 8, expanded: Object.create(null), emptyTitle: "No announcements yet", emptyMessage: "New announcements will appear here automatically once they are posted from the bot." }
+      };
+
+      function endpointList(pathname) {
+        var endpoints = [];
+        function add(url) { if (url && endpoints.indexOf(url) === -1) endpoints.push(url); }
+        if (window.MEOW_STATS_API_BASE) add(String(window.MEOW_STATS_API_BASE).replace(/\/$/, "") + pathname);
+        if (window.location.protocol !== "file:") add(window.location.origin.replace(/\/$/, "") + pathname);
+        if (window.location.protocol === "file:" || /^(localhost|127\.0\.0\.1)$/i.test(window.location.hostname)) add("http://127.0.0.1:3001" + pathname);
+        return endpoints;
+      }
+
+      async function fetchFirstJson(pathname) {
+        var endpoints = endpointList(pathname);
+        for (var i = 0; i < endpoints.length; i += 1) {
+          try {
+            var response = await fetch(endpoints[i], { headers: { "Accept": "application/json" } });
+            if (!response.ok) continue;
+            return await response.json();
+          } catch (_) {}
+        }
+        return null;
+      }
+
+      function setActiveUpdatesView(sectionKey) {
+        document.querySelectorAll(".updates-section-block").forEach(function (element) {
+          element.classList.toggle("is-active", element.id === "updatesSection" + sectionKey.charAt(0).toUpperCase() + sectionKey.slice(1));
+        });
+        document.querySelectorAll("[data-updates-view]").forEach(function (button) {
+          var isActive = button.getAttribute("data-updates-view") === sectionKey;
+          button.classList.toggle("is-active", isActive);
+          button.setAttribute("aria-pressed", isActive ? "true" : "false");
+        });
+      }
+
+      function escapeHtml(value) {
+        return String(value || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\"/g, "&quot;").replace(/'/g, "&#39;");
+      }
+
+      function formatUpdateDate(value) {
+        var date = new Date(value || "");
+        if (isNaN(date.getTime())) return "Unknown date";
+        return date.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+      }
+
+      function renderSingleUpdateCard(item, index, isFeatured, sectionKey) {
+        var sectionState = updateSections[sectionKey] || { expanded: Object.create(null) };
+        var type = String(item && item.type || "update");
+        var label = sectionKey === "announcements" || type === "announcement" || type === "notice" ? "Announcement" : "Changelog";
+        var title = String(item && item.title || "Untitled update").trim() || "Untitled update";
+        var message = String(item && item.message || "").trim() || "No details provided.";
+        var id = String(item && item.id || "update-" + index);
+        var isLatest = index === 0;
+        var dateLabel = formatUpdateDate(item && item.createdAt);
+        var link = item && item.link ? String(item.link) : "";
+        var cardClass = ["soft", "warm", "lime"][index % 3];
+        var isExpanded = !!sectionState.expanded[id];
+        var bodyClass = "update-body" + (isExpanded ? "" : " is-collapsed " + (isFeatured ? "featured" : "regular"));
+        var toggleLabel = isExpanded ? "Read less" : "Read more";
+        var linkHtml = link ? '<a class="update-link" href="' + escapeHtml(link) + '" target="_blank" rel="noopener noreferrer">Open link</a>' : "";
+        var latestHtml = isLatest ? '<span class="update-latest-pill">Latest</span>' : "";
+        return '<article class="update-item ' + cardClass + (isFeatured ? ' is-featured' : '') + '">' +
+          '<div class="update-meta"><div class="update-meta-tags"><span class="update-type-pill">' + escapeHtml(label) + '</span>' + latestHtml + '</div><span class="update-date">' + escapeHtml(dateLabel) + '</span></div>' +
+          '<h3>' + escapeHtml(title) + '</h3>' +
+          '<p class="' + bodyClass + '">' + escapeHtml(message).replace(/\n/g, '<br>') + '</p>' +
+          '<div class="update-actions"><button class="update-more-button" type="button" data-update-section="' + escapeHtml(sectionKey) + '" data-update-toggle="' + escapeHtml(id) + '">' + escapeHtml(toggleLabel) + '</button>' + linkHtml + '</div>' +
+        '</article>';
+      }
+
+      function renderUpdateSection(sectionKey, items) {
+        var sectionState = updateSections[sectionKey];
+        if (!sectionState) return;
+        sectionState.items = Array.isArray(items) ? items : [];
+        var updatesFeatured = document.getElementById(sectionKey + "Featured");
+        var updatesFeed = document.getElementById(sectionKey + "Feed");
+        var updatesPagination = document.getElementById(sectionKey + "Pagination");
+        if (!updatesFeed || !updatesFeatured || !updatesPagination) return;
+        if (!sectionState.items.length) {
+          updatesFeatured.innerHTML = '<article class="update-item soft is-featured"><h3>' + escapeHtml(sectionState.emptyTitle) + '</h3><p>' + escapeHtml(sectionState.emptyMessage) + '</p></article>';
+          updatesFeed.innerHTML = "";
+          updatesPagination.innerHTML = "";
+          return;
+        }
+        var totalPages = Math.max(1, Math.ceil(sectionState.items.length / sectionState.pageSize));
+        if (sectionState.page >= totalPages) sectionState.page = totalPages - 1;
+        if (sectionState.page < 0) sectionState.page = 0;
+        var start = sectionState.page * sectionState.pageSize;
+        var pageItems = sectionState.items.slice(start, start + sectionState.pageSize);
+        var featured = pageItems.slice(0, 2);
+        var gridItems = pageItems.filter(function (item) { return featured.indexOf(item) === -1; });
+        updatesFeatured.innerHTML = featured.map(function (item, index) { return renderSingleUpdateCard(item, start + index, true, sectionKey); }).join("");
+        updatesFeed.innerHTML = gridItems.map(function (item, index) { return renderSingleUpdateCard(item, start + featured.length + index, false, sectionKey); }).join("");
+        updatesPagination.innerHTML = totalPages > 1
+          ? '<button class="updates-page-button" type="button" data-updates-section="' + escapeHtml(sectionKey) + '" data-updates-page="prev"' + (sectionState.page === 0 ? ' disabled' : '') + '>Prev</button><div class="updates-page-indicator">Page ' + (sectionState.page + 1) + ' / ' + totalPages + '</div><button class="updates-page-button" type="button" data-updates-section="' + escapeHtml(sectionKey) + '" data-updates-page="next"' + (sectionState.page >= totalPages - 1 ? ' disabled' : '') + '>Next</button>'
+          : "";
+      }
+
+      async function hydrateUpdateSection(sectionKey, pathname) {
+        var payload = await fetchFirstJson(pathname + (pathname.indexOf("?") === -1 ? "?" : "&") + "t=" + Date.now());
+        renderUpdateSection(sectionKey, payload && Array.isArray(payload.items) ? payload.items : []);
+      }
+
+      document.addEventListener("click", function (event) {
+        var toggleViewButton = event.target.closest("[data-updates-view]");
+        if (toggleViewButton) {
+          var viewKey = toggleViewButton.getAttribute("data-updates-view");
+          if (viewKey && updateSections[viewKey]) setActiveUpdatesView(viewKey);
+          return;
+        }
+        var toggleButton = event.target.closest("[data-update-toggle]");
+        if (toggleButton) {
+          var toggleSection = toggleButton.getAttribute("data-update-section");
+          var toggleId = toggleButton.getAttribute("data-update-toggle");
+          if (toggleId && toggleSection && updateSections[toggleSection]) {
+            updateSections[toggleSection].expanded[toggleId] = !updateSections[toggleSection].expanded[toggleId];
+            renderUpdateSection(toggleSection, updateSections[toggleSection].items);
+          }
+          return;
+        }
+        var pageButton = event.target.closest("[data-updates-page]");
+        if (pageButton) {
+          var pageSection = pageButton.getAttribute("data-updates-section");
+          var direction = pageButton.getAttribute("data-updates-page");
+          if (pageButton.disabled || !pageSection || !updateSections[pageSection]) return;
+          if (direction === "prev" && updateSections[pageSection].page > 0) updateSections[pageSection].page -= 1;
+          if (direction === "next") updateSections[pageSection].page += 1;
+          renderUpdateSection(pageSection, updateSections[pageSection].items);
+          document.querySelector(".page-hero")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+
+      setActiveUpdatesView("announcements");
+      hydrateUpdateSection("changelogs", "/api/changelogs?limit=48");
+      hydrateUpdateSection("announcements", "/api/announcements?limit=48");
+    }());
+  </script>
+</body>
+</html>

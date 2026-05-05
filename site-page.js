@@ -87,8 +87,8 @@
   }
 
   async function hydrateLinks() {
-    var data = await fetchFirstJson("/api/links");
-    if (data && data.links) applyLinks(data.links);
+    var data = await fetchFirstJson("/api/links?t=" + Date.now());
+    if (data) applyLinks(data.appLinks || data.links);
   }
 
   hydrateLinks();
