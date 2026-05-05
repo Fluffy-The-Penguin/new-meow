@@ -9,18 +9,18 @@
 <body class="updates-page">
   <nav class="site-shell nav" id="siteNav" aria-label="Primary navigation"><a class="brand" href="/"><img src="favicon.png?v=5" alt="Meow Bot logo"><span>Meow Bot</span></a><div class="nav-links"><a href="/commands">Commands</a><a href="/games">Games</a><a href="/updates" class="is-active">Updates</a><a href="/premium">Premium</a><a href="/support">Support</a><a href="/legal">Legal</a></div><div class="nav-actions"><button class="menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu">=</button><button class="theme-toggle" id="themeToggle" type="button">Pure dark</button><a class="button-primary" data-app-link="invite" href="https://discord.com/oauth2/authorize?client_id=1488940777190199386" target="_blank" rel="noopener noreferrer">Invite Bot</a></div></nav>
   <main class="site-shell">
-    <section class="page-hero"><div><div class="eyebrow">Live feed</div><h1>Updates from <span>the bot.</span></h1><p class="lead">Release notes and announcements are pulled directly from Meow Bot's saved feed, so public changelogs and notices stay in sync with the owner tools.</p><div class="updates-toggle-bar" role="tablist" aria-label="Updates feed selector"><button class="updates-toggle-button is-active" type="button" data-updates-view="announcements" aria-pressed="true">Announcements</button><button class="updates-toggle-button" type="button" data-updates-view="changelogs" aria-pressed="false">Changelogs</button></div></div><aside class="mascot-card"><img src="1.png" alt="Sleeping cat mascot"></aside></section>
+    <section class="page-hero"><div><div class="eyebrow">Latest news</div><h1>What changed <span>recently.</span></h1><p class="lead">Follow Meow Bot announcements, feature rollouts, fixes, maintenance notes, and community updates in one place.</p><div class="updates-toggle-bar" role="tablist" aria-label="Updates feed selector"><button class="updates-toggle-button is-active" type="button" data-updates-view="announcements" aria-pressed="true">Announcements</button><button class="updates-toggle-button" type="button" data-updates-view="changelogs" aria-pressed="false">Changelogs</button></div></div><aside class="mascot-card"><img src="1.png" alt="Sleeping cat mascot"></aside></section>
 
     <section class="section updates-section-block" id="updatesSectionChangelogs">
-      <div class="updates-section-head"><div class="section-kicker">Release notes</div><h2 class="updates-section-title">Changelogs</h2><p class="updates-section-copy">Product changes, fixes, and feature rollout notes posted through Meow Bot.</p></div>
-      <div class="updates-featured" id="changelogsFeatured"><article class="update-item soft is-featured"><h3>Loading changelogs...</h3><p>The site is fetching the latest saved changelog entries from the bot.</p></article></div>
+      <div class="updates-section-head"><div class="section-kicker">Release notes</div><h2 class="updates-section-title">Changelogs</h2><p class="updates-section-copy">Product changes, fixes, and feature rollout notes for Meow Bot users.</p></div>
+      <div class="updates-featured" id="changelogsFeatured"><article class="update-item soft is-featured"><h3>Loading changelogs...</h3><p>Latest Meow Bot changes are loading now.</p></article></div>
       <div class="update-list" id="changelogsFeed"></div>
       <div class="updates-pagination" id="changelogsPagination" aria-label="Changelog pagination"></div>
     </section>
 
     <section class="section updates-section-block is-active" id="updatesSectionAnnouncements">
       <div class="updates-section-head"><div class="section-kicker">Public notices</div><h2 class="updates-section-title">Announcements</h2><p class="updates-section-copy">Broadcasts, event notices, maintenance heads-up posts, and other public updates.</p></div>
-      <div class="updates-featured" id="announcementsFeatured"><article class="update-item warm is-featured"><h3>Loading announcements...</h3><p>The site is fetching the latest saved announcements from the bot.</p></article></div>
+      <div class="updates-featured" id="announcementsFeatured"><article class="update-item warm is-featured"><h3>Loading announcements...</h3><p>Latest Meow Bot announcements are loading now.</p></article></div>
       <div class="update-list" id="announcementsFeed"></div>
       <div class="updates-pagination" id="announcementsPagination" aria-label="Announcement pagination"></div>
     </section>
@@ -39,8 +39,8 @@
   <script>
     (function () {
       var updateSections = {
-        changelogs: { items: [], page: 0, pageSize: 8, expanded: Object.create(null), emptyTitle: "No changelogs yet", emptyMessage: "New changelog entries will appear here automatically once they are posted from the bot." },
-        announcements: { items: [], page: 0, pageSize: 8, expanded: Object.create(null), emptyTitle: "No announcements yet", emptyMessage: "New announcements will appear here automatically once they are posted from the bot." }
+        changelogs: { items: [], page: 0, pageSize: 8, expanded: Object.create(null), emptyTitle: "No changelogs yet", emptyMessage: "New changelog entries will appear here automatically once they are published." },
+        announcements: { items: [], page: 0, pageSize: 8, expanded: Object.create(null), emptyTitle: "No announcements yet", emptyMessage: "New announcements will appear here automatically once they are published." }
       };
 
       function endpointList(pathname) {

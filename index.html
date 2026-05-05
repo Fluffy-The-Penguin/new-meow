@@ -74,9 +74,11 @@
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
     body {
       margin: 0;
+      width: 100%;
+      max-width: 100%;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--text);
       background:
@@ -84,6 +86,11 @@
         radial-gradient(circle at 85% 18%, rgba(52, 213, 255, 0.18), transparent 32vw),
         linear-gradient(180deg, var(--bg), var(--bg-2) 48%, var(--bg));
       overflow-x: hidden;
+    }
+
+    @supports (overflow: clip) {
+      html,
+      body { overflow-x: clip; }
     }
 
     html[data-theme="light"] body {
@@ -118,8 +125,8 @@
     button, input { font: inherit; }
     img { max-width: 100%; display: block; }
 
-    .site-shell { width: min(100% - 32px, var(--max)); margin: 0 auto; }
-    .site-shell.nav { width: min(100% - 32px, 1060px); }
+    .site-shell { width: min(100% - 32px, var(--max)); max-width: calc(100vw - 32px); margin: 0 auto; }
+    .site-shell.nav { width: min(100% - 32px, 1060px); max-width: calc(100vw - 32px); }
 
     .nav {
       position: sticky;
@@ -155,15 +162,15 @@
     html[data-theme="pure-dark"] .nav { background: rgba(0, 0, 0, 0.82); }
     html[data-theme="pure-dark"] .nav::before { background: radial-gradient(circle at 50% 0, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.06) 38%, transparent 72%); opacity: 0.75; }
 
-    .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 900; letter-spacing: -0.03em; }
+    .brand { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 10px; font-weight: 900; letter-spacing: -0.03em; white-space: nowrap; }
     .brand img { width: 42px; height: 42px; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px rgba(255,255,255,0.1); }
     .brand span { font-size: 1.08rem; }
 
-    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-links { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; justify-content: center; gap: 4px; }
     .nav-links a { padding: 10px 13px; border-radius: 999px; color: var(--muted); font-size: 0.88rem; font-weight: 800; }
     .nav-links a:hover { color: var(--text); background: var(--card); }
 
-    .nav-actions { display: flex; align-items: center; gap: 8px; }
+    .nav-actions { flex: 0 0 auto; display: flex; align-items: center; gap: 8px; }
     .theme-toggle, .menu-toggle {
       min-height: 42px;
       border: 1px solid var(--line);
@@ -295,64 +302,21 @@
     html[data-theme="light"] .hero h1 span { -webkit-text-stroke-color: rgba(18, 22, 46, 0.72); }
     .hero-copy { max-width: 680px; margin: 24px 0 0; color: var(--muted); font-size: clamp(1.05rem, 1.8vw, 1.34rem); line-height: 1.65; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
-    .bot-card {
-      position: relative;
-      min-height: 610px;
-      border: 1px solid var(--line);
-      border-radius: 34px;
-      background:
-        radial-gradient(circle at 78% 18%, rgba(247, 101, 200, 0.32), transparent 31%),
-        radial-gradient(circle at 12% 8%, rgba(85, 200, 255, 0.16), transparent 34%),
-        linear-gradient(145deg, rgba(35, 45, 100, 0.96), rgba(10, 14, 42, 0.98));
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-    html[data-theme="light"] .bot-card {
-      background:
-        radial-gradient(circle at 78% 18%, rgba(247, 101, 200, 0.22), transparent 31%),
-        radial-gradient(circle at 12% 8%, rgba(85, 200, 255, 0.2), transparent 34%),
-        linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(230, 239, 255, 0.98));
-      box-shadow: 0 30px 90px rgba(74, 84, 130, 0.2);
-    }
-    html[data-theme="pure-dark"] .bot-card {
-      background: linear-gradient(145deg, #080808, #000000);
-      border-color: rgba(255,255,255,0.18);
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.04);
-    }
-    .bot-card::before { content: ""; position: absolute; inset: 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 26px; pointer-events: none; }
-    html[data-theme="light"] .bot-card::before { border-color: rgba(23,31,58,0.12); }
-    html[data-theme="pure-dark"] .bot-card::before { border-color: rgba(255,255,255,0.08); }
-    .preview-mascot { position: absolute; top: 52px; left: 50%; width: min(48%, 250px); transform: translateX(-50%); display: grid; place-items: center; }
-    .preview-mascot::before { content: ""; position: absolute; width: 70%; aspect-ratio: 1; top: -8%; right: 3%; border-radius: 999px; background: radial-gradient(circle, rgba(126,137,255,0.26), transparent 70%); }
-    html[data-theme="light"] .preview-mascot::before { background: radial-gradient(circle, rgba(126,137,255,0.16), transparent 70%); }
-    html[data-theme="pure-dark"] .preview-mascot::before { background: radial-gradient(circle, rgba(255,255,255,0.09), transparent 70%); }
-    .preview-mascot img { position: relative; width: 100%; max-height: 190px; object-fit: contain; filter: drop-shadow(0 22px 30px rgba(0,0,0,0.28)); }
-    .discord-window { position: absolute; left: 34px; right: 34px; bottom: 34px; border: 1px solid rgba(213,221,255,0.14); border-radius: 26px; background: rgba(8, 10, 30, 0.82); overflow: hidden; backdrop-filter: blur(18px); box-shadow: 0 24px 60px rgba(0,0,0,0.26); }
-    html[data-theme="light"] .discord-window { border-color: rgba(23,31,58,0.14); background: rgba(255,255,255,0.88); box-shadow: 0 24px 60px rgba(74,84,130,0.16); }
-    html[data-theme="pure-dark"] .discord-window { border-color: rgba(255,255,255,0.14); background: rgba(0,0,0,0.9); box-shadow: none; }
-    .discord-head { display: flex; justify-content: space-between; gap: 12px; padding: 18px 18px 14px; border-bottom: 1px solid var(--line); }
-    .discord-head strong { font-size: 1.1rem; }
-    .discord-head span { color: var(--muted); }
-    .message-list { display: grid; gap: 12px; padding: 18px; }
-    .message { display: grid; grid-template-columns: 42px minmax(0, 1fr); gap: 12px; align-items: start; }
-    .avatar { width: 42px; height: 42px; border-radius: 16px; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, var(--pink), var(--soft)); font-weight: 900; box-shadow: 0 10px 22px rgba(126,137,255,0.22); }
-    .bubble { padding: 14px 16px; border-radius: 18px; background: rgba(255,255,255,0.085); color: var(--muted); line-height: 1.45; }
-    html[data-theme="light"] .bubble { background: rgba(35,45,78,0.07); color: #35405f; }
-    html[data-theme="pure-dark"] .bubble { background: rgba(255,255,255,0.07); }
-    .bubble strong { display: block; margin-bottom: 4px; color: var(--text); }
-    .command-bar { display: flex; align-items: center; gap: 10px; margin: 0 18px 18px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 18px; color: var(--muted); background: rgba(255,255,255,0.06); }
-    html[data-theme="light"] .command-bar { background: rgba(255,255,255,0.72); }
-    html[data-theme="pure-dark"] .command-bar { background: #050505; }
-    .command-bar code { color: var(--cyan); font-weight: 900; }
-    .hero-float { position: absolute; z-index: 3; display: grid; gap: 5px; min-width: 172px; padding: 13px 14px; border: 1px solid var(--line); border-radius: 20px; color: var(--muted); background: rgba(9, 11, 31, 0.72); box-shadow: 0 18px 44px rgba(0,0,0,0.22); backdrop-filter: blur(18px); }
-    html[data-theme="light"] .hero-float { background: rgba(255,255,255,0.86); box-shadow: 0 18px 44px rgba(74,84,130,0.14); }
-    html[data-theme="pure-dark"] .hero-float { background: rgba(0,0,0,0.82); box-shadow: none; }
-    .hero-float strong { color: var(--text); }
-    .hero-float span { font-size: 0.88rem; }
-    .hero-float code { color: var(--cyan); font-weight: 950; }
-    .hero-float.is-quests { left: 18px; top: 74px; }
-    .hero-float.is-pet { right: 18px; top: 232px; }
-    .hero-float.is-economy { left: 32px; bottom: 196px; }
+    .bot-card { display: grid; gap: 18px; padding: clamp(18px, 3vw, 28px); border: 1px solid var(--line); border-radius: 32px; background: var(--panel-strong); box-shadow: var(--shadow); }
+    html[data-theme="pure-dark"] .bot-card { background: #050505; border-color: rgba(255,255,255,0.18); box-shadow: none; }
+    .bot-card-head { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 18px; align-items: center; }
+    .bot-card-head img { width: 104px; aspect-ratio: 1; object-fit: contain; }
+    .bot-card-kicker { color: var(--cyan); font-size: 0.78rem; font-weight: 950; letter-spacing: 0.1em; text-transform: uppercase; }
+    .bot-card h2 { margin: 6px 0 0; font-size: clamp(1.9rem, 4vw, 3.1rem); line-height: 0.96; letter-spacing: -0.07em; text-transform: uppercase; }
+    .bot-card p { margin: 10px 0 0; color: var(--muted); line-height: 1.6; }
+    .bot-feature-list { display: grid; gap: 10px; }
+    .bot-feature { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; align-items: center; padding: 12px; border: 1px solid var(--line); border-radius: 18px; background: var(--card); }
+    .bot-feature b { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 14px; color: #fff; background: linear-gradient(135deg, var(--soft), var(--pink)); }
+    html[data-theme="pure-dark"] .bot-feature b { color: #000; background: #f5f5f5; }
+    .bot-feature strong { display: block; color: var(--text); }
+    .bot-feature span { display: block; margin-top: 2px; color: var(--muted); font-size: 0.92rem; line-height: 1.4; }
+    .command-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .command-chips code { padding: 8px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--cyan); background: var(--card); font-weight: 950; }
 
     .stats-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 72px; }
     .stat-card { padding: 20px; border: 1px solid var(--line); border-radius: 24px; background: var(--panel); }
@@ -440,6 +404,12 @@
     .footer-col a:hover { color: var(--text); }
     .footer-bottom { grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 0.9rem; }
 
+    .hero > *,
+    .split > *,
+    .cta-panel > *,
+    .dashboard-mock > *,
+    .footer > * { min-width: 0; }
+
     @media (prefers-reduced-motion: reduce) {
       * { scroll-behavior: auto !important; }
       .hero .hero-actions .button-primary,
@@ -450,7 +420,6 @@
 
     @media (max-width: 980px) {
       .hero, .split, .cta-panel { grid-template-columns: 1fr; }
-      .bot-card { min-height: 560px; }
       .stats-strip, .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .dashboard-mock { grid-template-columns: 1fr; }
       .platform-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -459,17 +428,31 @@
       .footer-col:first-child { grid-column: 1 / -1; }
     }
 
-    @media (max-width: 760px) {
-      .site-shell { width: min(100% - 20px, var(--max)); }
-      .nav { top: 8px; gap: 10px; padding: 8px 10px; border-radius: 22px; flex-wrap: wrap; }
-      .brand { gap: 8px; }
-      .brand img { width: 36px; height: 36px; }
-      .brand span { font-size: 1rem; }
+    @media (max-width: 1100px) {
+      .site-shell.nav { width: min(100% - 20px, 1060px); max-width: calc(100vw - 20px); }
+      .nav { gap: 10px; padding: 10px 12px; }
+      .nav-links a { padding: 9px 9px; font-size: 0.84rem; }
+      .nav-actions .button-primary { display: none; }
+      .theme-toggle { width: 96px; flex-basis: 96px; }
+    }
+
+    @media (max-width: 900px) {
+      .nav { top: 8px; border-radius: 22px; flex-wrap: wrap; }
+      .nav::before { inset: -10px; filter: blur(10px); }
       .nav-links { display: none; width: 100%; flex-direction: column; align-items: stretch; order: 4; }
       .nav.is-open .nav-links { display: flex; }
       .nav-links a { text-align: center; }
-      .nav-actions { margin-left: auto; gap: 6px; }
+      .nav-actions { margin-left: auto; }
       .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+    }
+
+    @media (max-width: 760px) {
+      .site-shell, .site-shell.nav { width: min(100% - 20px, var(--max)); max-width: calc(100vw - 20px); }
+      .nav { gap: 10px; padding: 8px 10px; }
+      .brand { gap: 8px; }
+      .brand img { width: 36px; height: 36px; }
+      .brand span { font-size: 1rem; }
+      .nav-actions { margin-left: auto; gap: 6px; }
       .theme-toggle, .menu-toggle { min-height: 38px; }
       .theme-toggle { width: 88px; flex: 0 0 88px; padding: 0 8px; font-size: 0.82rem; }
       .menu-toggle { width: 38px; }
@@ -479,11 +462,10 @@
       .hero h1 { font-size: clamp(3rem, 17vw, 5rem); }
       .hero-copy { margin-top: 18px; }
       .hero-actions { align-items: center; margin-top: 22px; }
-      .hero-actions .button-primary, .hero-actions .button-secondary, .cta-actions .button-primary, .cta-actions .button-secondary { flex: 0 0 auto; width: auto !important; max-width: calc(100vw - 32px); }
-      .bot-card { min-height: 520px; border-radius: 28px; }
-      .hero-float { display: none; }
-      .preview-mascot { top: 38px; width: min(58%, 210px); }
-      .discord-window { left: 14px; right: 14px; bottom: 14px; }
+      .hero-actions .button-primary, .hero-actions .button-secondary, .cta-actions .button-primary, .cta-actions .button-secondary { flex: 0 0 auto; width: auto !important; max-width: 100%; }
+      .bot-card { border-radius: 28px; }
+      .bot-card-head { grid-template-columns: 82px minmax(0, 1fr); gap: 14px; }
+      .bot-card-head img { width: 82px; }
       .section { padding: 42px 0; }
       .section-head { margin-bottom: 20px; }
       .stats-strip { margin-bottom: 34px; }
@@ -504,16 +486,18 @@
 
     @media (max-width: 560px) {
       .hero-actions, .cta-actions { gap: 9px; }
-      .hero-actions .button-primary, .hero-actions .button-secondary, .cta-actions .button-primary, .cta-actions .button-secondary { flex: 0 0 auto; width: auto !important; max-width: calc(100vw - 32px); }
+      .hero-actions .button-primary, .hero-actions .button-secondary, .cta-actions .button-primary, .cta-actions .button-secondary { flex: 0 0 auto; width: auto !important; max-width: 100%; }
     }
 
     @media (max-width: 430px) {
-      .site-shell { width: min(100% - 16px, var(--max)); }
+      .site-shell, .site-shell.nav { width: min(100% - 16px, var(--max)); max-width: calc(100vw - 16px); }
       .nav { border-radius: 20px; }
       .brand img { width: 34px; height: 34px; }
       .theme-toggle { width: 82px; flex-basis: 82px; }
       .button-primary, .button-secondary { min-height: 40px; padding: 0 13px; font-size: 0.9rem; }
-      .hero-actions .button-primary, .hero-actions .button-secondary, .cta-actions .button-primary, .cta-actions .button-secondary { width: fit-content !important; max-width: calc(100vw - 32px); }
+      .bot-card-head { grid-template-columns: 1fr; }
+      .bot-card-head img { width: 96px; }
+      .hero-actions .button-primary, .hero-actions .button-secondary, .cta-actions .button-primary, .cta-actions .button-secondary { width: fit-content !important; max-width: 100%; }
       .stats-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
       .stat-card { padding: 14px; border-radius: 18px; }
       .platform-grid { grid-template-columns: 1fr; }
@@ -548,7 +532,7 @@
       <div>
         <div class="eyebrow status-pill is-offline" id="botStatusBadge" aria-live="polite"><span class="status-dot" id="botStatusDot"></span><span id="botStatusText">Checking status</span></div>
         <h1>Discord chaos, <span>cat approved.</span></h1>
-        <p class="hero-copy">Meow Bot brings social games, pets, quests, economy, movie nights, quick lookups, reaction settings, and a sassy cat personality into one playful Discord bot for active communities.</p>
+        <p class="hero-copy">Meow Bot brings social games, pets, quests, economy, movie nights, quick lookups, reaction settings, and a playful cat personality into one Discord bot for active communities.</p>
         <div class="hero-actions">
           <a class="button-primary" data-app-link="invite" href="https://discord.com/oauth2/authorize?client_id=1488940777190199386" target="_blank" rel="noopener noreferrer">Add Meow Bot</a>
           <a class="button-secondary" data-app-link="vote" href="https://top.gg/bot/1488940777190199386" target="_blank" rel="noopener noreferrer">Vote on Top.gg</a>
@@ -556,35 +540,29 @@
         </div>
       </div>
 
-      <aside class="bot-card" aria-label="Discord preview">
-        <div class="preview-mascot"><img src="1.png" alt="Sleeping cat mascot" decoding="async" fetchpriority="low"></div>
-        <div class="hero-float is-quests"><strong>Daily quests</strong><span><code>3/5</code> tasks complete</span></div>
-        <div class="hero-float is-pet"><strong>Pet mood</strong><span>Sleepy but judging</span></div>
-        <div class="hero-float is-economy"><strong>Coin streak</strong><span><code>+420</code> today</span></div>
-        <div class="discord-window">
-          <div class="discord-head"><strong># meow-lounge</strong><span>Live server vibe</span></div>
-          <div class="message-list">
-            <div class="message">
-              <div class="avatar">M</div>
-              <div class="bubble"><strong>Meow Bot</strong>Daily quests reset. Pet eggs are active. Someone should absolutely start trivia.</div>
-            </div>
-            <div class="message">
-              <div class="avatar">U</div>
-              <div class="bubble"><strong>Server Member</strong>/cute</div>
-            </div>
-            <div class="message">
-              <div class="avatar">M</div>
-              <div class="bubble"><strong>Meow Bot</strong>Certified cute from r/aww. Button ready for the next one.</div>
-            </div>
+      <aside class="bot-card" aria-label="Meow Bot feature preview">
+        <div class="bot-card-head">
+          <img src="1.png" alt="Sleeping cat mascot" decoding="async" fetchpriority="low">
+          <div>
+            <div class="bot-card-kicker">Server energy boost</div>
+            <h2>Play, collect, repeat.</h2>
+            <p>Games, pets, quests, reminders, and utility commands in one cat-powered server companion.</p>
           </div>
-          <div class="command-bar"><code>/</code><span>Try /pet, /trivia, /movie, /quests, /cute...</span></div>
+        </div>
+        <div class="bot-feature-list">
+          <div class="bot-feature"><b>Q</b><div><strong>Daily goals</strong><span>Quests and streaks give members a reason to return.</span></div></div>
+          <div class="bot-feature"><b>P</b><div><strong>Pet progression</strong><span>Hatch eggs, care for pets, unlock jobs, and evolve.</span></div></div>
+          <div class="bot-feature"><b>G</b><div><strong>Quick games</strong><span>Trivia, Wordle, WTP, hangman, blackjack, and more.</span></div></div>
+        </div>
+        <div class="command-chips" aria-label="Starter commands">
+          <code>/start</code><code>/quests</code><code>/pet</code><code>/trivia</code><code>/cute</code>
         </div>
       </aside>
     </section>
 
     <section class="stats-strip" aria-label="Live bot stats">
       <article class="stat-card"><strong data-live-stat="servers">0</strong><span>servers live</span></article>
-      <article class="stat-card"><strong data-live-stat="players">0</strong><span>players tracked</span></article>
+      <article class="stat-card"><strong data-live-stat="players">0</strong><span>members with progress</span></article>
       <article class="stat-card"><strong data-live-stat="commands">0</strong><span>slash commands</span></article>
       <article class="stat-card"><strong>24/7</strong><span>community utilities</span></article>
     </section>
@@ -592,18 +570,18 @@
 
   <section class="community-track" aria-label="Community examples">
     <div class="community-row" id="communityRow" aria-hidden="true">
-      <article class="community-card"><div class="community-icon"><img src="favicon.png?v=5" alt=""></div><div><strong>Pet Collectors</strong><span>82.4K members</span></div></article>
-      <article class="community-card"><div class="community-icon"><img src="1.png" alt=""></div><div><strong>Game Nights</strong><span>64.9K members</span></div></article>
-      <article class="community-card"><div class="community-icon"><img src="2.png" alt=""></div><div><strong>Quest Servers</strong><span>41.7K members</span></div></article>
-      <article class="community-card"><div class="community-icon"><img src="favicon.png?v=5" alt=""></div><div><strong>Movie Clubs</strong><span>38.2K members</span></div></article>
-      <article class="community-card"><div class="community-icon"><img src="1.png" alt=""></div><div><strong>Counting Crews</strong><span>57.1K members</span></div></article>
-      <article class="community-card"><div class="community-icon"><img src="2.png" alt=""></div><div><strong>Anime Corners</strong><span>49.6K members</span></div></article>
-      <article class="community-card"><div class="community-icon"><img src="favicon.png?v=5" alt=""></div><div><strong>Pet Collectors</strong><span>82.4K members</span></div></article>
-      <article class="community-card"><div class="community-icon"><img src="1.png" alt=""></div><div><strong>Game Nights</strong><span>64.9K members</span></div></article>
-      <article class="community-card"><div class="community-icon"><img src="2.png" alt=""></div><div><strong>Quest Servers</strong><span>41.7K members</span></div></article>
-      <article class="community-card"><div class="community-icon"><img src="favicon.png?v=5" alt=""></div><div><strong>Movie Clubs</strong><span>38.2K members</span></div></article>
-      <article class="community-card"><div class="community-icon"><img src="1.png" alt=""></div><div><strong>Counting Crews</strong><span>57.1K members</span></div></article>
-      <article class="community-card"><div class="community-icon"><img src="2.png" alt=""></div><div><strong>Anime Corners</strong><span>49.6K members</span></div></article>
+      <article class="community-card"><div class="community-icon"><img src="favicon.png?v=5" alt=""></div><div><strong>Pet Collecting</strong><span>Hatch, care, evolve</span></div></article>
+      <article class="community-card"><div class="community-icon"><img src="1.png" alt=""></div><div><strong>Game Nights</strong><span>Trivia, Wordle, WTP</span></div></article>
+      <article class="community-card"><div class="community-icon"><img src="2.png" alt=""></div><div><strong>Daily Quests</strong><span>Goals that bring returns</span></div></article>
+      <article class="community-card"><div class="community-icon"><img src="favicon.png?v=5" alt=""></div><div><strong>Movie Clubs</strong><span>Polls and watchlists</span></div></article>
+      <article class="community-card"><div class="community-icon"><img src="1.png" alt=""></div><div><strong>Counting Crews</strong><span>Goals and leaderboards</span></div></article>
+      <article class="community-card"><div class="community-icon"><img src="2.png" alt=""></div><div><strong>Social Servers</strong><span>Prompts, jokes, images</span></div></article>
+      <article class="community-card"><div class="community-icon"><img src="favicon.png?v=5" alt=""></div><div><strong>Pet Collecting</strong><span>Hatch, care, evolve</span></div></article>
+      <article class="community-card"><div class="community-icon"><img src="1.png" alt=""></div><div><strong>Game Nights</strong><span>Trivia, Wordle, WTP</span></div></article>
+      <article class="community-card"><div class="community-icon"><img src="2.png" alt=""></div><div><strong>Daily Quests</strong><span>Goals that bring returns</span></div></article>
+      <article class="community-card"><div class="community-icon"><img src="favicon.png?v=5" alt=""></div><div><strong>Movie Clubs</strong><span>Polls and watchlists</span></div></article>
+      <article class="community-card"><div class="community-icon"><img src="1.png" alt=""></div><div><strong>Counting Crews</strong><span>Goals and leaderboards</span></div></article>
+      <article class="community-card"><div class="community-icon"><img src="2.png" alt=""></div><div><strong>Social Servers</strong><span>Prompts, jokes, images</span></div></article>
     </div>
   </section>
 
@@ -617,7 +595,7 @@
       <div class="feature-grid">
         <article class="feature-card"><b>01</b><h3>Games that fill quiet channels</h3><p>Trivia, Wordle, WTP, hangman, riddles, country games, blackjack, PvP, lotteries, and more.</p></article>
         <article class="feature-card"><b>02</b><h3>Progress that gives members a reason to return</h3><p>Coins, XP, daily streaks, quests, achievements, shop items, badges, titles, and pet collection loops.</p></article>
-        <article class="feature-card"><b>03</b><h3>Utilities with personality</h3><p>Cute images, cat facts, movie picks, AniList lookups, dictionaries, Wikipedia, advice, jokes, and sassy chat behavior.</p></article>
+        <article class="feature-card"><b>03</b><h3>Utilities with personality</h3><p>Cute images, cat facts, movie picks, anime and manga tools, word lookups, advice, jokes, reminders, and playful chat behavior.</p></article>
       </div>
     </section>
 
@@ -635,9 +613,9 @@
         <div class="dashboard-mock">
           <article class="dashboard-card dashboard-stat"><span>Activity tools</span><strong>Games</strong><small>Wordle, trivia, WTP, counting, pets, economy, and quests.</small></article>
           <article class="dashboard-card dashboard-stat"><span>Server setup</span><strong>Channels</strong><small>Configure talk, pet, logs, announcements, Wordle, and counting channels.</small></article>
-          <article class="dashboard-card is-wide"><h3>Automation preview</h3><div class="dashboard-list"><div class="dashboard-item"><b>W</b><div><strong>Daily Wordle</strong><small>Optional scheduled prompt for your Wordle channel.</small></div><code>setup</code></div><div class="dashboard-item"><b>P</b><div><strong>Pet events</strong><small>Pet channel alerts for eggs, care loops, and collection moments.</small></div><code>optional</code></div><div class="dashboard-item"><b>Q</b><div><strong>Quest notices</strong><small>Private completion messages with user opt-out support.</small></div><code>toggle</code></div></div></article>
+          <article class="dashboard-card is-wide"><h3>Server flow preview</h3><div class="dashboard-list"><div class="dashboard-item"><b>W</b><div><strong>Daily Wordle</strong><small>Scheduled prompts keep your Wordle channel active.</small></div><code>setup</code></div><div class="dashboard-item"><b>P</b><div><strong>Pet events</strong><small>Pet alerts create collection moments for active members.</small></div><code>optional</code></div><div class="dashboard-item"><b>Q</b><div><strong>Quest notices</strong><small>Private completions keep rewards personal and clear.</small></div><code>toggle</code></div></div></article>
           <article class="dashboard-card"><h3>Popular commands</h3><div class="dashboard-command"><code>/cute</code><span>Safe cute image roll</span></div><div class="dashboard-command"><code>/movie poll</code><span>Movie-night voting</span></div><div class="dashboard-command"><code>/counting</code><span>Counting channel setup</span></div></article>
-          <article class="dashboard-card"><h3>Dashboard controls</h3><div class="dashboard-list"><div class="dashboard-item"><b>T</b><div><strong>Talk channel</strong><small>Limit chat behavior to the right place.</small></div><code>set</code></div><div class="dashboard-item"><b>L</b><div><strong>Logs channel</strong><small>Route useful moderation and bot updates.</small></div><code>set</code></div></div></article>
+          <article class="dashboard-card"><h3>Channel controls</h3><div class="dashboard-list"><div class="dashboard-item"><b>T</b><div><strong>Talk channel</strong><small>Keep bot chat in the place your server chooses.</small></div><code>set</code></div><div class="dashboard-item"><b>L</b><div><strong>Logs channel</strong><small>Route useful server notices where staff can see them.</small></div><code>set</code></div></div></article>
         </div>
       </div>
     </section>
@@ -646,12 +624,12 @@
       <div class="section-head">
         <div class="section-kicker">Command preview</div>
         <h2>Simple commands, <em>big server energy.</em></h2>
-        <p class="section-copy">A few examples from the public command list imported to Discord and Top.gg.</p>
+        <p class="section-copy">A few starter commands your members can use right away.</p>
       </div>
       <div class="command-grid">
         <article class="command-card"><code>/pet</code><span>Open the pet management panel and take care of your current companion.</span></article>
         <article class="command-card"><code>/quests</code><span>View daily quests and progress toward bonus coins.</span></article>
-        <article class="command-card"><code>/cute</code><span>Pull safe cute posts from selected Reddit communities with a next button.</span></article>
+        <article class="command-card"><code>/cute</code><span>Get safe cute images with a next button when your server needs instant wholesome energy.</span></article>
         <article class="command-card"><code>/movie poll</code><span>Start a movie-night poll based on a movie seed.</span></article>
         <article class="command-card"><code>/counting setup</code><span>Configure a counting channel, goals, resumes, emojis, and leaderboards.</span></article>
         <article class="command-card"><code>/leaderboard</code><span>Show server or global rankings for coins, XP, streaks, games, and achievements.</span></article>
@@ -669,7 +647,7 @@
         <article class="platform-card">Anime<span>Ready</span></article>
         <article class="platform-card">Movies<span>Ready</span></article>
         <article class="platform-card">Word Games<span>Ready</span></article>
-        <article class="platform-card">Dashboard<span>Ready</span></article>
+        <article class="platform-card">Server Tools<span>Ready</span></article>
       </div>
     </section>
 
@@ -680,9 +658,9 @@
       </div>
       <div class="faq-grid">
         <article class="faq-card"><h3>Why are slash commands not appearing?</h3><p>Discord can take time to propagate commands. Re-invite with application command scope or wait a little after updates.</p></article>
-        <article class="faq-card"><h3>How do I make the bot talk in one channel?</h3><p>Use the talk channel setup command or admin dashboard so chat behavior stays contained to the channel you choose.</p></article>
+        <article class="faq-card"><h3>How do I make the bot talk in one channel?</h3><p>Use the talk channel setup command or dashboard so chat behavior stays contained to the channel you choose.</p></article>
         <article class="faq-card"><h3>Does Meow Bot support private reminders?</h3><p>Yes. Reminder DMs and daily quest completion notices can be toggled by users.</p></article>
-        <article class="faq-card"><h3>Can I control update posts?</h3><p>Yes. Configure announcement and update channels, then use the owner tools for saved changelogs and announcements.</p></article>
+        <article class="faq-card"><h3>Can I control update posts?</h3><p>Yes. Configure announcement and update channels, then publish saved changelogs and announcements when your community needs them.</p></article>
       </div>
     </section>
 
@@ -691,7 +669,7 @@
       <div class="cta-panel">
         <div>
           <h2>Ready to wake up your server?</h2>
-          <p>Invite Meow Bot, pick a few setup channels, and let your members start earning, playing, collecting, voting, and causing carefully supervised cat chaos.</p>
+          <p>Invite Meow Bot, choose a few channels, and give your members daily reasons to play, collect, vote, laugh, and come back.</p>
         </div>
         <div class="cta-actions">
           <a class="button-primary" data-app-link="invite" href="https://discord.com/oauth2/authorize?client_id=1488940777190199386" target="_blank" rel="noopener noreferrer">Invite Meow Bot</a>
@@ -927,7 +905,7 @@
           animateLiveCount(element, stats[key], function (value) {
             if (key === "commands") return formatCount(value) + " slash commands";
             if (key === "servers") return formatCount(value) + " servers live";
-            return formatCount(value) + " players tracked";
+            return formatCount(value) + " members with progress";
           });
         });
         applyLinks(stats.appLinks);
