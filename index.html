@@ -487,7 +487,10 @@
       .section { padding: 42px 0; }
       .section-head { margin-bottom: 20px; }
       .stats-strip { margin-bottom: 34px; }
-      .stats-strip, .feature-grid, .command-grid, .faq-grid { grid-template-columns: 1fr; }
+      .feature-grid, .command-grid, .faq-grid { grid-template-columns: 1fr; }
+      .stats-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .stat-card { padding: 16px; border-radius: 20px; }
+      .stat-card span { font-size: 0.88rem; }
       .platform-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .command-card { grid-template-columns: 1fr; }
       .cta-panel { gap: 16px; padding: 24px; }
@@ -511,6 +514,8 @@
       .theme-toggle { width: 82px; flex-basis: 82px; }
       .button-primary, .button-secondary { min-height: 40px; padding: 0 13px; font-size: 0.9rem; }
       .hero-actions .button-primary, .hero-actions .button-secondary, .cta-actions .button-primary, .cta-actions .button-secondary { width: fit-content !important; max-width: calc(100vw - 32px); }
+      .stats-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+      .stat-card { padding: 14px; border-radius: 18px; }
       .platform-grid { grid-template-columns: 1fr; }
       .footer { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .footer-bottom { display: grid; }
@@ -628,11 +633,11 @@
       </div>
       <div class="mock-panel">
         <div class="dashboard-mock">
-          <article class="dashboard-card dashboard-stat"><span>Active today</span><strong>12.8K</strong><small>game rounds, pet actions, and quest checks</small></article>
-          <article class="dashboard-card dashboard-stat"><span>Server streak</span><strong>31 days</strong><small>daily quests and Wordle kept moving</small></article>
-          <article class="dashboard-card is-wide"><h3>Live activity queue</h3><div class="dashboard-list"><div class="dashboard-item"><b>W</b><div><strong>Daily Wordle</strong><small>5 players solved today's word</small></div><code>live</code></div><div class="dashboard-item"><b>P</b><div><strong>Pet egg spawned</strong><small>#pet-lounge has a rare egg waiting</small></div><code>new</code></div><div class="dashboard-item"><b>Q</b><div><strong>Quest completed</strong><small>Coin bonus delivered privately</small></div><code>done</code></div></div></article>
-          <article class="dashboard-card"><h3>Command pulse</h3><div class="dashboard-command"><code>/cute</code><span>Reddit-safe image roll</span></div><div class="dashboard-command"><code>/movie poll</code><span>Night pick voting</span></div><div class="dashboard-command"><code>/counting</code><span>Goal progress update</span></div></article>
-          <article class="dashboard-card"><h3>Channels</h3><div class="dashboard-list"><div class="dashboard-item"><b>T</b><div><strong>Talk</strong><small>#meow-lounge</small></div><code>on</code></div><div class="dashboard-item"><b>L</b><div><strong>Logs</strong><small>#bot-updates</small></div><code>on</code></div></div></article>
+          <article class="dashboard-card dashboard-stat"><span>Activity tools</span><strong>Games</strong><small>Wordle, trivia, WTP, counting, pets, economy, and quests.</small></article>
+          <article class="dashboard-card dashboard-stat"><span>Server setup</span><strong>Channels</strong><small>Configure talk, pet, logs, announcements, Wordle, and counting channels.</small></article>
+          <article class="dashboard-card is-wide"><h3>Automation preview</h3><div class="dashboard-list"><div class="dashboard-item"><b>W</b><div><strong>Daily Wordle</strong><small>Optional scheduled prompt for your Wordle channel.</small></div><code>setup</code></div><div class="dashboard-item"><b>P</b><div><strong>Pet events</strong><small>Pet channel alerts for eggs, care loops, and collection moments.</small></div><code>optional</code></div><div class="dashboard-item"><b>Q</b><div><strong>Quest notices</strong><small>Private completion messages with user opt-out support.</small></div><code>toggle</code></div></div></article>
+          <article class="dashboard-card"><h3>Popular commands</h3><div class="dashboard-command"><code>/cute</code><span>Safe cute image roll</span></div><div class="dashboard-command"><code>/movie poll</code><span>Movie-night voting</span></div><div class="dashboard-command"><code>/counting</code><span>Counting channel setup</span></div></article>
+          <article class="dashboard-card"><h3>Dashboard controls</h3><div class="dashboard-list"><div class="dashboard-item"><b>T</b><div><strong>Talk channel</strong><small>Limit chat behavior to the right place.</small></div><code>set</code></div><div class="dashboard-item"><b>L</b><div><strong>Logs channel</strong><small>Route useful moderation and bot updates.</small></div><code>set</code></div></div></article>
         </div>
       </div>
     </section>
