@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="favicon.png?v=5">
+  <link rel="stylesheet" href="site-page.css">
+  <title>Commands - Meow Bot</title>
+  <script>(function(){var t=localStorage.getItem('meow-bot-theme');if(['light','dark','pure-dark'].indexOf(t)===-1)t='dark';document.documentElement.setAttribute('data-theme',t);}());</script>
+</head>
+<body>
+  <nav class="site-shell nav" id="siteNav" aria-label="Primary navigation">
+    <a class="brand" href="index.html"><img src="favicon.png?v=5" alt="Meow Bot logo"><span>Meow Bot</span></a>
+    <div class="nav-links"><a class="is-active" href="commands.html">Commands</a><a href="games.html">Games</a><a href="premium.html">Premium</a><a href="support.html">Support</a><a href="legal.html">Legal</a></div>
+    <div class="nav-actions"><button class="menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu">=</button><button class="theme-toggle" id="themeToggle" type="button">Pure dark</button><a class="button-primary" data-app-link="invite" href="https://discord.com/oauth2/authorize?client_id=1488940777190199386" target="_blank" rel="noopener noreferrer">Invite Bot</a></div>
+  </nav>
+
+  <main class="site-shell">
+    <section class="page-hero">
+      <div>
+        <div class="eyebrow">91 total commands</div>
+        <h1>Everything at <span>your fingertips.</span></h1>
+        <p class="lead">Browse Meow Bot commands by category. Type <code>/</code> in any Discord channel to start games, manage pets, configure channels, look things up, and keep your server active.</p>
+        <div class="hero-actions"><a class="button-primary" data-app-link="invite" href="https://discord.com/oauth2/authorize?client_id=1488940777190199386" target="_blank" rel="noopener noreferrer">Add Meow Bot</a><a class="button-secondary" href="index.html">Back to Home</a></div>
+      </div>
+      <aside class="mascot-card"><img src="1.png" alt="Sleeping cat mascot"></aside>
+    </section>
+
+    <section class="command-browser" aria-label="Command browser">
+      <div class="command-toolbar">
+        <input class="command-search" id="commandSearch" type="search" placeholder="Search commands, categories, or descriptions" autocomplete="off">
+        <div class="command-count-pill" id="commandCount">91 total commands</div>
+      </div>
+      <div class="command-tabs" aria-label="Command categories">
+        <button class="command-tab is-active" type="button" data-command-filter="all">All Commands</button>
+        <button class="command-tab" type="button" data-command-filter="games">Games</button>
+        <button class="command-tab" type="button" data-command-filter="economy">Economy</button>
+        <button class="command-tab" type="button" data-command-filter="pets">Pets</button>
+        <button class="command-tab" type="button" data-command-filter="setup">Setup</button>
+        <button class="command-tab" type="button" data-command-filter="media">Media</button>
+        <button class="command-tab" type="button" data-command-filter="social">Social</button>
+        <button class="command-tab" type="button" data-command-filter="utility">Utility</button>
+      </div>
+      <div class="command-directory" id="commandDirectory">
+        <article class="command-row" data-category="utility"><div><div class="command-name">/ping</div><span class="command-category">Utility</span></div><div class="command-description">Check the bot response.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/profile [user]</div><span class="command-category">Utility</span></div><div class="command-description">View your profile or inspect another user's public progress.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/identity view|set|filled|clear</div><span class="command-category">Utility</span></div><div class="command-description">Create, view, list, or clear server-only identity card details.</div></article>
+        <article class="command-row" data-category="setup"><div><div class="command-name">/admindashboard</div><span class="command-category">Setup</span></div><div class="command-description">Open the server admin dashboard if you have Manage Server permission.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/mood</div><span class="command-category">Utility</span></div><div class="command-description">Check the current Meow Bot mood.</div></article>
+        <article class="command-row" data-category="economy"><div><div class="command-name">/daily</div><span class="command-category">Economy</span></div><div class="command-description">Claim daily coins and build a streak bonus.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/reminder &lt;on|off&gt;</div><span class="command-category">Utility</span></div><div class="command-description">Turn automatic reminder DMs on or off.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/questnotifications &lt;on|off&gt;</div><span class="command-category">Utility</span></div><div class="command-description">Turn private daily quest completion messages on or off.</div></article>
+        <article class="command-row" data-category="economy"><div><div class="command-name">/balance</div><span class="command-category">Economy</span></div><div class="command-description">Check your coin balance.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/dictionary &lt;word&gt;</div><span class="command-category">Utility</span></div><div class="command-description">Look up a word in the dictionary.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/wikipedia &lt;query&gt;</div><span class="command-category">Utility</span></div><div class="command-description">Search Wikipedia for a topic.</div></article>
+        <article class="command-row" data-category="media"><div><div class="command-name">/anime info|recommend|library|import|character</div><span class="command-category">Media</span></div><div class="command-description">Use AniList for anime info, recommendations, library browsing, imports, and character lookup.</div></article>
+        <article class="command-row" data-category="media"><div><div class="command-name">/manga info|recommend|library|import</div><span class="command-category">Media</span></div><div class="command-description">Use AniList for manga information, recommendations, and list imports.</div></article>
+        <article class="command-row" data-category="economy"><div><div class="command-name">/gamble slots|roulette|dice|coinflip</div><span class="command-category">Economy</span></div><div class="command-description">Gamble coins through slots, roulette, dice, or coin flips.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/pvp coinflip|dice|rps</div><span class="command-category">Games</span></div><div class="command-description">Challenge another player to a coin-based duel.</div></article>
+        <article class="command-row" data-category="economy"><div><div class="command-name">/give &lt;user&gt; &lt;amount&gt;</div><span class="command-category">Economy</span></div><div class="command-description">Give coins to another member.</div></article>
+        <article class="command-row" data-category="economy"><div><div class="command-name">/shop [hide_owned]</div><span class="command-category">Economy</span></div><div class="command-description">Buy titles, badges, and pet-related items.</div></article>
+        <article class="command-row" data-category="economy"><div><div class="command-name">/mysterybox</div><span class="command-category">Economy</span></div><div class="command-description">Open the graphical mystery box hub.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/activitylog</div><span class="command-category">Utility</span></div><div class="command-description">View your recent tracked rewards and game results.</div></article>
+        <article class="command-row" data-category="media"><div><div class="command-name">/cat</div><span class="command-category">Media</span></div><div class="command-description">Get a random cat image.</div></article>
+        <article class="command-row" data-category="media"><div><div class="command-name">/animals [type]</div><span class="command-category">Media</span></div><div class="command-description">Get random animal images or choose a supported animal type.</div></article>
+        <article class="command-row" data-category="media"><div><div class="command-name">/cute</div><span class="command-category">Media</span></div><div class="command-description">Get safe cute images from selected Reddit communities.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/fact</div><span class="command-category">Utility</span></div><div class="command-description">Get a random fact.</div></article>
+        <article class="command-row" data-category="media"><div><div class="command-name">/nature</div><span class="command-category">Media</span></div><div class="command-description">Get a nature wallpaper.</div></article>
+        <article class="command-row" data-category="media"><div><div class="command-name">/catfact</div><span class="command-category">Media</span></div><div class="command-description">Get a cat fact.</div></article>
+        <article class="command-row" data-category="media"><div><div class="command-name">/funnycat</div><span class="command-category">Media</span></div><div class="command-description">Get a funny cat image.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/getadvice</div><span class="command-category">Utility</span></div><div class="command-description">Get a random advice slip.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/joke</div><span class="command-category">Utility</span></div><div class="command-description">Get a random joke.</div></article>
+        <article class="command-row" data-category="media"><div><div class="command-name">/dog [breed]</div><span class="command-category">Media</span></div><div class="command-description">Get a random dog image, optionally by breed.</div></article>
+        <article class="command-row" data-category="economy"><div><div class="command-name">/leaderboard [type] [global] [page]</div><span class="command-category">Economy</span></div><div class="command-description">View rankings for coins, XP, streaks, games, counting, and achievements.</div></article>
+        <article class="command-row" data-category="social"><div><div class="command-name">/roast &lt;user&gt;</div><span class="command-category">Social</span></div><div class="command-description">Roast someone in fun mode.</div></article>
+        <article class="command-row" data-category="media"><div><div class="command-name">/movie like|genre|random|info|compare|top10|watchlist|history|foryou|rate|unrate|profile|poll|feedback|overlap</div><span class="command-category">Media</span></div><div class="command-description">Movie recommendations, polls, watchlists, ratings, history, and taste tools.</div></article>
+        <article class="command-row" data-category="social"><div><div class="command-name">/ship &lt;user1&gt; &lt;user2&gt;</div><span class="command-category">Social</span></div><div class="command-description">Ship two users.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/trivia &lt;mode&gt;</div><span class="command-category">Games</span></div><div class="command-description">Start multiple-choice or single-answer trivia.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/riddle [riddles] [time] [autostart]</div><span class="command-category">Games</span></div><div class="command-description">Start a configurable riddle game.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/countrygame guess|flag|capital|clues|population</div><span class="command-category">Games</span></div><div class="command-description">Play country guessing modes using clues, flags, capitals, and population prompts.</div></article>
+        <article class="command-row" data-category="setup"><div><div class="command-name">/guesschannel &lt;channel&gt; &lt;min&gt; &lt;max&gt; &lt;cooldown&gt;</div><span class="command-category">Setup</span></div><div class="command-description">Set up a persistent guess-the-number channel.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/guessthenumber [min] [max] [cooldown]</div><span class="command-category">Games</span></div><div class="command-description">Start a one-off guess-the-number game.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/stopguess</div><span class="command-category">Games</span></div><div class="command-description">Stop the active guess-the-number game.</div></article>
+        <article class="command-row" data-category="setup"><div><div class="command-name">/talkchannel [channel] [disable]</div><span class="command-category">Setup</span></div><div class="command-description">Set or disable the bot reply channel.</div></article>
+        <article class="command-row" data-category="setup"><div><div class="command-name">/petchannel [channel] [disable]</div><span class="command-category">Setup</span></div><div class="command-description">Set or disable the pet events and egg spawn channel.</div></article>
+        <article class="command-row" data-category="setup"><div><div class="command-name">/logschannel [channel] [disable]</div><span class="command-category">Setup</span></div><div class="command-description">Set or disable the bot progress logs channel.</div></article>
+        <article class="command-row" data-category="setup"><div><div class="command-name">/eventchannel [channel] [disable]</div><span class="command-category">Setup</span></div><div class="command-description">Set or disable public event announcements.</div></article>
+        <article class="command-row" data-category="setup"><div><div class="command-name">/announcechannel [channel] [disable]</div><span class="command-category">Setup</span></div><div class="command-description">Set or disable Meow Bot update posts.</div></article>
+        <article class="command-row" data-category="setup"><div><div class="command-name">/dailywordlechannel [channel] [disable]</div><span class="command-category">Setup</span></div><div class="command-description">Set or disable Daily Wordle notifications.</div></article>
+        <article class="command-row" data-category="setup"><div><div class="command-name">/anonymouschannel [channel] [disable]</div><span class="command-category">Setup</span></div><div class="command-description">Set or disable anonymous statement posts.</div></article>
+        <article class="command-row" data-category="setup"><div><div class="command-name">/counting setup|move|emoji|resume|goal|stats|leaderboard|shop</div><span class="command-category">Setup</span></div><div class="command-description">Manage counting channels, goals, resumes, emojis, stats, leaderboards, and shop.</div></article>
+        <article class="command-row" data-category="social"><div><div class="command-name">/truthordare [type] [level] [target]</div><span class="command-category">Social</span></div><div class="command-description">Get a truth or dare prompt.</div></article>
+        <article class="command-row" data-category="social"><div><div class="command-name">/nhie [level]</div><span class="command-category">Social</span></div><div class="command-description">Get a Never Have I Ever prompt.</div></article>
+        <article class="command-row" data-category="social"><div><div class="command-name">/paranoia [level]</div><span class="command-category">Social</span></div><div class="command-description">Get a paranoia question.</div></article>
+        <article class="command-row" data-category="social"><div><div class="command-name">/anonymousstatement &lt;target&gt; [mood]</div><span class="command-category">Social</span></div><div class="command-description">Send an anonymous sentence to a player.</div></article>
+        <article class="command-row" data-category="social"><div><div class="command-name">/hug &lt;user&gt;</div><span class="command-category">Social</span></div><div class="command-description">Hug someone.</div></article>
+        <article class="command-row" data-category="social"><div><div class="command-name">/kiss &lt;user&gt;</div><span class="command-category">Social</span></div><div class="command-description">Kiss someone.</div></article>
+        <article class="command-row" data-category="social"><div><div class="command-name">/wouldyourather [option_a] [option_b] [duration]</div><span class="command-category">Social</span></div><div class="command-description">Start a Would You Rather vote.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/dadjoke</div><span class="command-category">Games</span></div><div class="command-description">Start an interactive dad joke.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/hangman [difficulty] [mode]</div><span class="command-category">Games</span></div><div class="command-description">Start a Hangman game.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/wordchain</div><span class="command-category">Games</span></div><div class="command-description">Start a Word Chain game.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/guessthenearest</div><span class="command-category">Games</span></div><div class="command-description">Start a customizable multiplayer nearest-number game.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/scramble [rounds] [difficulty] [time]</div><span class="command-category">Games</span></div><div class="command-description">Start a Scramble Words game.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/wordle [mode] [letters] [theme]</div><span class="command-category">Games</span></div><div class="command-description">Start a Wordle game.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/dailywordle</div><span class="command-category">Games</span></div><div class="command-description">Play the Daily Wordle from any server.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/wordlestats</div><span class="command-category">Games</span></div><div class="command-description">View your Wordle statistics.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/wtp setup|start|stop</div><span class="command-category">Games</span></div><div class="command-description">Set up, start, or stop Who's That Pokemon.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/stopgame</div><span class="command-category">Games</span></div><div class="command-description">Stop any active game in the current channel.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/help</div><span class="command-category">Utility</span></div><div class="command-description">Show all commands.</div></article>
+        <article class="command-row" data-category="economy"><div><div class="command-name">/achievements [user]</div><span class="command-category">Economy</span></div><div class="command-description">View achievements.</div></article>
+        <article class="command-row" data-category="economy"><div><div class="command-name">/inventory [user]</div><span class="command-category">Economy</span></div><div class="command-description">View owned shop items.</div></article>
+        <article class="command-row" data-category="economy"><div><div class="command-name">/trade &lt;user&gt; &lt;offer&gt; &lt;request&gt;</div><span class="command-category">Economy</span></div><div class="command-description">Trade badges or titles with another user.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/clearmemory</div><span class="command-category">Utility</span></div><div class="command-description">Clear conversation memory with the bot.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/mydata</div><span class="command-category">Utility</span></div><div class="command-description">Manage stored data and participation preferences.</div></article>
+        <article class="command-row" data-category="setup"><div><div class="command-name">/resetuser &lt;user&gt; &lt;field&gt;</div><span class="command-category">Setup</span></div><div class="command-description">Reset a user's data. Admin only.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/changelog [count]</div><span class="command-category">Utility</span></div><div class="command-description">View saved Meow Bot changelog entries.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/announcements [count]</div><span class="command-category">Utility</span></div><div class="command-description">View saved Meow Bot announcement posts.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/featureandbug</div><span class="command-category">Utility</span></div><div class="command-description">Send a feature request or bug report.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/myrequests [count]</div><span class="command-category">Utility</span></div><div class="command-description">View your recent feature requests and bug reports.</div></article>
+        <article class="command-row" data-category="pets"><div><div class="command-name">/pet</div><span class="command-category">Pets</span></div><div class="command-description">Open the pet management panel.</div></article>
+        <article class="command-row" data-category="pets"><div><div class="command-name">/petimage [image] [clear]</div><span class="command-category">Pets</span></div><div class="command-description">Upload or clear your pet image.</div></article>
+        <article class="command-row" data-category="pets"><div><div class="command-name">/petfuneral</div><span class="command-category">Pets</span></div><div class="command-description">Release your ghost pet and move on.</div></article>
+        <article class="command-row" data-category="setup"><div><div class="command-name">/start</div><span class="command-category">Setup</span></div><div class="command-description">Show setup steps and important bot info.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/howtoplay &lt;game&gt;</div><span class="command-category">Games</span></div><div class="command-description">Learn how to play any supported game.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/blackjack &lt;bet&gt;</div><span class="command-category">Games</span></div><div class="command-description">Play Blackjack with coins.</div></article>
+        <article class="command-row" data-category="economy"><div><div class="command-name">/lottery start|view|history</div><span class="command-category">Economy</span></div><div class="command-description">Create, view, or inspect weekly and event lotteries.</div></article>
+        <article class="command-row" data-category="media"><div><div class="command-name">/meme</div><span class="command-category">Media</span></div><div class="command-description">Get a random meme.</div></article>
+        <article class="command-row" data-category="games"><div><div class="command-name">/timetravel [era]</div><span class="command-category">Games</span></div><div class="command-description">Travel through time and change history.</div></article>
+        <article class="command-row" data-category="pets"><div><div class="command-name">/petfight &lt;opponent&gt;</div><span class="command-category">Pets</span></div><div class="command-description">Challenge another player to a pet fight.</div></article>
+        <article class="command-row" data-category="pets"><div><div class="command-name">/tournament create|join|status</div><span class="command-category">Pets</span></div><div class="command-description">Create, join, or view pet fight tournaments.</div></article>
+        <article class="command-row" data-category="economy"><div><div class="command-name">/event</div><span class="command-category">Economy</span></div><div class="command-description">Open the graphical XP and coin event panel.</div></article>
+        <article class="command-row" data-category="setup"><div><div class="command-name">/reactions</div><span class="command-category">Setup</span></div><div class="command-description">Open automatic reaction settings.</div></article>
+        <article class="command-row" data-category="utility"><div><div class="command-name">/textcommands</div><span class="command-category">Utility</span></div><div class="command-description">Show retired text command replacements.</div></article>
+        <article class="command-row" data-category="setup"><div><div class="command-name">/serverinfo</div><span class="command-category">Setup</span></div><div class="command-description">Show current Meow Bot setup for this server.</div></article>
+        <article class="command-row" data-category="economy"><div><div class="command-name">/quests</div><span class="command-category">Economy</span></div><div class="command-description">View your daily quests.</div></article>
+      </div>
+      <div class="command-empty" id="commandEmpty" hidden>No commands matched your search.</div>
+    </section>
+  </main>
+
+  <script src="site-page.js"></script>
+  <script>
+    (function () {
+      var search = document.getElementById('commandSearch');
+      var count = document.getElementById('commandCount');
+      var empty = document.getElementById('commandEmpty');
+      var rows = Array.prototype.slice.call(document.querySelectorAll('.command-row'));
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-command-filter]'));
+      var active = 'all';
+
+      function label(value) {
+        return value === 'all' ? 'commands' : value + ' commands';
+      }
+
+      function render() {
+        var query = (search && search.value || '').trim().toLowerCase();
+        var shown = 0;
+        rows.forEach(function (row) {
+          var categoryMatch = active === 'all' || row.dataset.category === active;
+          var queryMatch = !query || row.textContent.toLowerCase().indexOf(query) !== -1;
+          var visible = categoryMatch && queryMatch;
+          row.hidden = !visible;
+          if (visible) shown += 1;
+        });
+        if (count) count.textContent = shown + ' ' + label(active);
+        if (empty) empty.hidden = shown !== 0;
+      }
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          active = tab.dataset.commandFilter || 'all';
+          tabs.forEach(function (item) { item.classList.toggle('is-active', item === tab); });
+          render();
+        });
+      });
+      if (search) search.addEventListener('input', render);
+      render();
+    }());
+  </script>
+</body>
+</html>

@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/favicon.png?v=5">
+  <link rel="shortcut icon" type="image/png" href="/favicon.png?v=5">
+  <link rel="apple-touch-icon" href="/favicon.png?v=5">
+  <title>Meow Bot - Discord Bot For Playful Communities</title>
+  <meta name="description" content="Meow Bot is a playful Discord bot with games, pets, economy, quests, cat personality chat, moderation setup tools, and community events.">
+  <script>
+    (function () {
+      var storageKey = "meow-bot-theme";
+      var savedTheme = localStorage.getItem(storageKey);
+      if (["light", "dark", "pure-dark"].indexOf(savedTheme) === -1) savedTheme = "dark";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    }());
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #070816;
+      --bg-2: #0d1230;
+      --panel: rgba(18, 24, 54, 0.78);
+      --panel-strong: rgba(25, 32, 72, 0.94);
+      --card: rgba(255, 255, 255, 0.075);
+      --card-2: rgba(255, 255, 255, 0.11);
+      --text: #fffafd;
+      --muted: #bfc5f7;
+      --soft: #7e89ff;
+      --pink: #f765c8;
+      --cyan: #34d5ff;
+      --amber: #ffc86b;
+      --green: #5af0a1;
+      --line: rgba(213, 221, 255, 0.16);
+      --shadow: 0 28px 90px rgba(0, 0, 0, 0.35);
+      --max: 1180px;
+    }
+
+    html[data-theme="light"] {
+      color-scheme: light;
+      --bg: #fff7fb;
+      --bg-2: #eef7ff;
+      --panel: rgba(255, 255, 255, 0.82);
+      --panel-strong: rgba(255, 255, 255, 0.94);
+      --card: rgba(22, 31, 72, 0.07);
+      --card-2: rgba(22, 31, 72, 0.1);
+      --text: #12162e;
+      --muted: #56607f;
+      --soft: #5b62da;
+      --pink: #c32d99;
+      --cyan: #087fa8;
+      --amber: #b16a00;
+      --green: #167a45;
+      --line: rgba(22, 31, 72, 0.15);
+      --shadow: 0 28px 90px rgba(74, 84, 130, 0.18);
+    }
+
+    html[data-theme="pure-dark"] {
+      --bg: #000000;
+      --bg-2: #050505;
+      --panel: rgba(12, 12, 12, 0.88);
+      --panel-strong: rgba(18, 18, 18, 0.96);
+      --card: rgba(255, 255, 255, 0.07);
+      --card-2: rgba(255, 255, 255, 0.105);
+      --muted: #c7c7c7;
+      --soft: #ffffff;
+      --pink: #d8d8d8;
+      --cyan: #eeeeee;
+      --amber: #d5d5d5;
+      --green: #f5f5f5;
+      --line: rgba(255, 255, 255, 0.14);
+      --shadow: none;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(247, 101, 200, 0.2), transparent 30vw),
+        radial-gradient(circle at 85% 18%, rgba(52, 213, 255, 0.18), transparent 32vw),
+        linear-gradient(180deg, var(--bg), var(--bg-2) 48%, var(--bg));
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.22;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(to bottom, black, transparent 78%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .site-shell { width: min(100% - 32px, var(--max)); margin: 0 auto; }
+
+    .nav {
+      position: sticky;
+      top: 14px;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(10, 13, 33, 0.78);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    html[data-theme="light"] .nav { background: rgba(255, 255, 255, 0.76); }
+    html[data-theme="pure-dark"] .nav { background: rgba(0, 0, 0, 0.82); }
+
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 900; letter-spacing: -0.03em; }
+    .brand img { width: 42px; height: 42px; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px rgba(255,255,255,0.1); }
+    .brand span { font-size: 1.08rem; }
+
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-links a { padding: 10px 13px; border-radius: 999px; color: var(--muted); font-size: 0.88rem; font-weight: 800; }
+    .nav-links a:hover { color: var(--text); background: var(--card); }
+
+    .nav-actions { display: flex; align-items: center; gap: 8px; }
+    .theme-toggle, .menu-toggle {
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--text);
+      padding: 0 14px;
+      cursor: pointer;
+      font-weight: 750;
+    }
+    .menu-toggle { display: none; width: 44px; padding: 0; }
+
+    .button-primary, .button-secondary {
+      display: inline-flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 0 18px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      border: 1px solid var(--line);
+      white-space: nowrap;
+    }
+    .button-primary {
+      color: #ffffff;
+      border: 0;
+      background: linear-gradient(135deg, #55c8ff, #7b78ff 45%, #f765c8);
+      box-shadow: 0 18px 42px rgba(126, 137, 255, 0.28);
+    }
+    .button-secondary { color: var(--text); background: var(--card); }
+
+    .hero { display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(360px, 0.88fr); gap: clamp(28px, 6vw, 74px); align-items: center; padding: clamp(72px, 12vw, 132px) 0 72px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; width: fit-content; margin-bottom: 18px; padding: 9px 13px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: var(--card); font-size: 0.82rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; }
+    .status-dot { width: 10px; height: 10px; border-radius: 999px; background: #ff5d68; box-shadow: 0 0 18px rgba(255, 93, 104, 0.85); }
+    .status-dot.is-online { background: var(--green); box-shadow: 0 0 18px rgba(90, 240, 161, 0.85); }
+    .status-dot.is-degraded { background: var(--amber); box-shadow: 0 0 18px rgba(255, 200, 107, 0.85); }
+
+    .hero h1 { margin: 0; max-width: 820px; font-size: clamp(3.1rem, 8.8vw, 7.6rem); line-height: 0.9; letter-spacing: -0.09em; text-transform: uppercase; }
+    .hero h1 span { display: block; font-weight: 300; font-style: italic; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.9); }
+    html[data-theme="light"] .hero h1 span { -webkit-text-stroke-color: rgba(18, 22, 46, 0.72); }
+    .hero-copy { max-width: 680px; margin: 24px 0 0; color: var(--muted); font-size: clamp(1.05rem, 1.8vw, 1.34rem); line-height: 1.65; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .hero-notes { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; color: var(--muted); font-size: 0.9rem; font-weight: 760; }
+    .hero-notes span { padding: 8px 11px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,0.045); }
+
+    .bot-card {
+      position: relative;
+      min-height: 610px;
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 76% 16%, rgba(247, 101, 200, 0.26), transparent 32%),
+        linear-gradient(145deg, rgba(31, 39, 88, 0.96), rgba(15, 18, 48, 0.98));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .bot-card::before { content: ""; position: absolute; inset: 16px; border: 1px solid rgba(255,255,255,0.09); border-radius: 26px; pointer-events: none; }
+    .cat-orbit { position: absolute; top: 30px; right: 30px; width: 156px; height: 156px; border-radius: 999px; background: rgba(255,255,255,0.08); display: grid; place-items: center; }
+    .cat-orbit img { width: 124px; height: 124px; object-fit: contain; filter: drop-shadow(0 18px 28px rgba(0,0,0,0.25)); }
+    .discord-window { position: absolute; left: 26px; right: 26px; bottom: 26px; border: 1px solid var(--line); border-radius: 26px; background: rgba(7, 9, 26, 0.74); overflow: hidden; backdrop-filter: blur(14px); }
+    .discord-head { display: flex; justify-content: space-between; gap: 12px; padding: 18px 18px 14px; border-bottom: 1px solid var(--line); }
+    .discord-head strong { font-size: 1.1rem; }
+    .discord-head span { color: var(--muted); }
+    .message-list { display: grid; gap: 12px; padding: 18px; }
+    .message { display: grid; grid-template-columns: 42px minmax(0, 1fr); gap: 12px; align-items: start; }
+    .avatar { width: 42px; height: 42px; border-radius: 16px; display: grid; place-items: center; background: linear-gradient(135deg, var(--pink), var(--soft)); font-weight: 900; }
+    .bubble { padding: 13px 14px; border-radius: 18px; background: rgba(255,255,255,0.075); color: var(--muted); line-height: 1.45; }
+    .bubble strong { display: block; margin-bottom: 4px; color: var(--text); }
+    .command-bar { display: flex; align-items: center; gap: 8px; margin: 0 18px 18px; padding: 11px 12px; border: 1px solid var(--line); border-radius: 16px; color: var(--muted); background: rgba(255,255,255,0.06); }
+    .command-bar code { color: var(--cyan); font-weight: 900; }
+
+    .stats-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 72px; }
+    .stat-card { padding: 20px; border: 1px solid var(--line); border-radius: 24px; background: var(--panel); }
+    .stat-card strong { display: block; font-size: clamp(1.7rem, 4vw, 3rem); line-height: 1; letter-spacing: -0.06em; }
+    .stat-card span { display: block; margin-top: 8px; color: var(--muted); font-weight: 800; }
+
+    .section { padding: 78px 0; }
+    .section-head { max-width: 760px; margin-bottom: 30px; }
+    .section-kicker { color: var(--cyan); font-weight: 950; letter-spacing: 0.11em; text-transform: uppercase; font-size: 0.78rem; }
+    .section h2 { margin: 10px 0 0; font-size: clamp(2.3rem, 6vw, 5.1rem); line-height: 0.96; letter-spacing: -0.08em; text-transform: uppercase; }
+    .section h2 em { display: block; font-weight: 300; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.82); }
+    html[data-theme="light"] .section h2 em { -webkit-text-stroke-color: rgba(18, 22, 46, 0.66); }
+    .section-copy { max-width: 700px; margin: 16px 0 0; color: var(--muted); font-size: 1.06rem; line-height: 1.7; }
+
+    .community-track { width: min(100% - 32px, var(--max)); margin: 0 auto; border: 1px solid var(--line); border-radius: 28px; overflow: hidden; background: rgba(255,255,255,0.035); }
+    .community-row { display: flex; gap: 14px; width: max-content; padding: 18px 0; animation: marquee 34s linear infinite; }
+    .community-card { width: 250px; display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 12px; align-items: center; padding: 12px; border: 1px solid var(--line); border-radius: 22px; background: var(--panel); }
+    .community-icon { width: 48px; height: 48px; border-radius: 18px; display: grid; place-items: center; background: linear-gradient(135deg, var(--soft), var(--pink)); font-weight: 950; }
+    .community-card strong { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .community-card span { color: var(--muted); font-size: 0.9rem; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    .feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .feature-card { min-height: 248px; padding: 22px; border: 1px solid var(--line); border-radius: 30px; background: var(--panel); overflow: hidden; position: relative; }
+    .feature-card::after { content: ""; position: absolute; width: 160px; height: 160px; right: -44px; top: -52px; border-radius: 999px; background: radial-gradient(circle, rgba(247,101,200,0.24), transparent 70%); }
+    .feature-card b { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 18px; margin-bottom: 26px; background: var(--card-2); color: var(--cyan); }
+    .feature-card h3 { margin: 0; font-size: 1.35rem; letter-spacing: -0.035em; }
+    .feature-card p { margin: 12px 0 0; color: var(--muted); line-height: 1.62; }
+
+    .split { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1fr); gap: clamp(24px, 5vw, 58px); align-items: center; }
+    .mock-panel { border: 1px solid var(--line); border-radius: 34px; background: var(--panel-strong); box-shadow: var(--shadow); padding: 20px; }
+    .queue-list { display: grid; gap: 10px; }
+    .queue-item { display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,0.055); }
+    .queue-item span:first-child { width: 36px; height: 36px; border-radius: 13px; display: grid; place-items: center; background: var(--card-2); color: var(--cyan); font-weight: 950; }
+    .queue-item strong { display: block; }
+    .queue-item small { color: var(--muted); }
+    .queue-item code { color: var(--green); font-weight: 900; }
+
+    .command-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .command-card { display: grid; grid-template-columns: minmax(130px, auto) minmax(0, 1fr); gap: 14px; align-items: start; padding: 16px; border: 1px solid var(--line); border-radius: 20px; background: var(--panel); }
+    .command-card code { color: var(--cyan); font-size: 1rem; font-weight: 950; }
+    .command-card span { color: var(--muted); line-height: 1.45; }
+
+    .platform-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+    .platform-card { min-height: 108px; display: grid; place-items: center; gap: 8px; padding: 16px; border: 1px solid var(--line); border-radius: 24px; background: var(--panel); text-align: center; font-weight: 950; }
+    .platform-card span { color: var(--green); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.09em; }
+
+    .faq-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .faq-card { padding: 20px; border: 1px solid var(--line); border-radius: 24px; background: var(--panel); }
+    .faq-card h3 { margin: 0 0 10px; font-size: 1.12rem; }
+    .faq-card p { margin: 0; color: var(--muted); line-height: 1.62; }
+
+    .cta-panel { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 22px; align-items: center; padding: clamp(26px, 5vw, 48px); border: 1px solid var(--line); border-radius: 38px; background: linear-gradient(135deg, rgba(126,137,255,0.24), rgba(247,101,200,0.18)), var(--panel-strong); box-shadow: var(--shadow); }
+    .cta-panel h2 { margin: 0; font-size: clamp(2.2rem, 5vw, 4.8rem); line-height: 0.95; letter-spacing: -0.08em; text-transform: uppercase; }
+    .cta-panel p { margin: 14px 0 0; color: var(--muted); line-height: 1.65; }
+    .cta-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
+
+    .footer { display: grid; grid-template-columns: minmax(0, 1fr) repeat(3, auto); gap: 32px; padding: 54px 0 34px; color: var(--muted); }
+    .footer strong { color: var(--text); }
+    .footer-col { display: grid; gap: 9px; align-content: start; }
+    .footer-col a { color: var(--muted); }
+    .footer-col a:hover { color: var(--text); }
+
+    .legal-section { padding: 28px 0 70px; color: var(--muted); }
+    .legal-section details { border: 1px solid var(--line); border-radius: 22px; background: var(--panel); padding: 16px 18px; margin-top: 12px; }
+    .legal-section summary { cursor: pointer; color: var(--text); font-weight: 900; }
+    .legal-section p { line-height: 1.65; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+      .community-row { animation: none; }
+    }
+
+    @media (max-width: 980px) {
+      .hero, .split, .cta-panel { grid-template-columns: 1fr; }
+      .bot-card { min-height: 560px; }
+      .stats-strip, .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .platform-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .cta-actions { justify-content: flex-start; }
+      .footer { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 760px) {
+      .site-shell { width: min(100% - 20px, var(--max)); }
+      .nav { top: 8px; border-radius: 26px; flex-wrap: wrap; }
+      .brand span { font-size: 1rem; }
+      .nav-links { display: none; width: 100%; flex-direction: column; align-items: stretch; order: 4; }
+      .nav.is-open .nav-links { display: flex; }
+      .nav-links a { text-align: center; }
+      .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+      .theme-toggle { padding: 0 12px; }
+      .nav-actions .button-primary { min-height: 42px; padding: 0 13px; }
+      .hero { padding-top: 54px; }
+      .hero h1 { font-size: clamp(3rem, 17vw, 5rem); }
+      .bot-card { min-height: 520px; border-radius: 28px; }
+      .cat-orbit { width: 124px; height: 124px; top: 20px; right: 20px; }
+      .cat-orbit img { width: 100px; height: 100px; }
+      .discord-window { left: 14px; right: 14px; bottom: 14px; }
+      .stats-strip, .feature-grid, .command-grid, .faq-grid { grid-template-columns: 1fr; }
+      .platform-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .command-card { grid-template-columns: 1fr; }
+      .footer { grid-template-columns: 1fr; gap: 20px; }
+    }
+
+    @media (max-width: 430px) {
+      .nav-actions { width: 100%; justify-content: space-between; }
+      .nav-actions .button-primary { flex: 1; }
+      .hero-actions .button-primary, .hero-actions .button-secondary { width: 100%; }
+      .platform-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-shell nav" id="siteNav" aria-label="Primary navigation">
+    <a class="brand" href="/" aria-label="Meow Bot home">
+      <img src="favicon.png?v=5" alt="Meow Bot logo" decoding="async">
+      <span>Meow Bot</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="commands.html">Commands</a>
+      <a href="games.html">Games</a>
+      <a href="premium.html">Premium</a>
+      <a href="support.html">Support</a>
+      <a href="legal.html">Legal</a>
+    </div>
+    <div class="nav-actions">
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu" aria-expanded="false">=</button>
+      <button class="theme-toggle" id="themeToggle" type="button">Pure dark</button>
+      <a class="button-primary" data-app-link="invite" href="https://discord.com/oauth2/authorize?client_id=1488940777190199386" target="_blank" rel="noopener noreferrer">Invite Bot</a>
+    </div>
+  </nav>
+
+  <main id="home" class="site-shell">
+    <section class="hero" aria-label="Meow Bot hero">
+      <div>
+        <div class="eyebrow"><span class="status-dot" id="botStatusDot"></span><span id="botStatusText">Checking status</span></div>
+        <h1>Discord chaos, <span>cat approved.</span></h1>
+        <p class="hero-copy">Meow Bot brings social games, pets, quests, economy, movie nights, quick lookups, reaction settings, and a sassy cat personality into one playful Discord bot for active communities.</p>
+        <div class="hero-actions">
+          <a class="button-primary" data-app-link="invite" href="https://discord.com/oauth2/authorize?client_id=1488940777190199386" target="_blank" rel="noopener noreferrer">Add Meow Bot</a>
+          <a class="button-secondary" data-app-link="vote" href="https://top.gg/bot/1488940777190199386" target="_blank" rel="noopener noreferrer">Vote on Top.gg</a>
+          <a class="button-secondary" data-app-link="discord" href="https://discord.gg/8aeWmjAd" target="_blank" rel="noopener noreferrer">Support Server</a>
+        </div>
+        <div class="hero-notes">
+          <span>Setup in minutes</span>
+          <span>Slash commands</span>
+          <span>Games and pets</span>
+          <span>Dashboard ready</span>
+        </div>
+      </div>
+
+      <aside class="bot-card" aria-label="Discord preview">
+        <div class="cat-orbit"><img src="1.png" alt="Sleeping cat mascot" decoding="async" fetchpriority="low"></div>
+        <div class="discord-window">
+          <div class="discord-head"><strong># meow-lounge</strong><span>Live server vibe</span></div>
+          <div class="message-list">
+            <div class="message">
+              <div class="avatar">M</div>
+              <div class="bubble"><strong>Meow Bot</strong>Daily quests reset. Pet eggs are active. Someone should absolutely start trivia.</div>
+            </div>
+            <div class="message">
+              <div class="avatar">U</div>
+              <div class="bubble"><strong>Server Member</strong>/cute</div>
+            </div>
+            <div class="message">
+              <div class="avatar">M</div>
+              <div class="bubble"><strong>Meow Bot</strong>Certified cute from r/aww. Button ready for the next one.</div>
+            </div>
+          </div>
+          <div class="command-bar"><code>/</code><span>Try /pet, /trivia, /movie, /quests, /cute...</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="stats-strip" aria-label="Live bot stats">
+      <article class="stat-card"><strong data-live-stat="servers">0</strong><span>servers live</span></article>
+      <article class="stat-card"><strong data-live-stat="players">0</strong><span>players tracked</span></article>
+      <article class="stat-card"><strong data-live-stat="commands">91</strong><span>slash commands</span></article>
+      <article class="stat-card"><strong>24/7</strong><span>community utilities</span></article>
+    </section>
+  </main>
+
+  <section class="community-track" aria-label="Community examples">
+    <div class="site-shell">
+      <div class="community-row" aria-hidden="true">
+        <article class="community-card"><div class="community-icon">P</div><div><strong>Pet Collectors</strong><span>eggs, pets, titles</span></div></article>
+        <article class="community-card"><div class="community-icon">G</div><div><strong>Game Nights</strong><span>trivia and word games</span></div></article>
+        <article class="community-card"><div class="community-icon">Q</div><div><strong>Quest Servers</strong><span>daily progression</span></div></article>
+        <article class="community-card"><div class="community-icon">M</div><div><strong>Movie Clubs</strong><span>polls and picks</span></div></article>
+        <article class="community-card"><div class="community-icon">C</div><div><strong>Counting Crews</strong><span>goals and streaks</span></div></article>
+        <article class="community-card"><div class="community-icon">A</div><div><strong>Anime Corners</strong><span>AniList lookups</span></div></article>
+        <article class="community-card"><div class="community-icon">P</div><div><strong>Pet Collectors</strong><span>eggs, pets, titles</span></div></article>
+        <article class="community-card"><div class="community-icon">G</div><div><strong>Game Nights</strong><span>trivia and word games</span></div></article>
+        <article class="community-card"><div class="community-icon">Q</div><div><strong>Quest Servers</strong><span>daily progression</span></div></article>
+        <article class="community-card"><div class="community-icon">M</div><div><strong>Movie Clubs</strong><span>polls and picks</span></div></article>
+        <article class="community-card"><div class="community-icon">C</div><div><strong>Counting Crews</strong><span>goals and streaks</span></div></article>
+        <article class="community-card"><div class="community-icon">A</div><div><strong>Anime Corners</strong><span>AniList lookups</span></div></article>
+      </div>
+    </div>
+  </section>
+
+  <main class="site-shell">
+    <section id="features" class="section">
+      <div class="section-head">
+        <div class="section-kicker">Built for active servers</div>
+        <h2>Everything social, <em>one slash away.</em></h2>
+        <p class="section-copy">Keep a community moving with games, economy, pets, quests, reminders, lookup tools, announcements, and channel setup flows that do not need a manual.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card"><b>01</b><h3>Games that fill quiet channels</h3><p>Trivia, Wordle, WTP, hangman, riddles, country games, blackjack, PvP, lotteries, and more.</p></article>
+        <article class="feature-card"><b>02</b><h3>Progress that gives members a reason to return</h3><p>Coins, XP, daily streaks, quests, achievements, shop items, badges, titles, and pet collection loops.</p></article>
+        <article class="feature-card"><b>03</b><h3>Utilities with personality</h3><p>Cute images, cat facts, movie picks, AniList lookups, dictionaries, Wikipedia, advice, jokes, and sassy chat behavior.</p></article>
+      </div>
+    </section>
+
+    <section id="games" class="section split">
+      <div>
+        <div class="section-kicker">Live activity</div>
+        <h2>Party games with <em>real progression.</em></h2>
+        <p class="section-copy">Games are not isolated toys. Meow Bot connects them to coins, quests, achievements, pets, counting goals, leaderboards, and server events so every round can matter.</p>
+        <div class="hero-actions">
+          <a class="button-primary" data-app-link="invite" href="https://discord.com/oauth2/authorize?client_id=1488940777190199386" target="_blank" rel="noopener noreferrer">Add to Server</a>
+          <a class="button-secondary" href="commands.html">See Commands</a>
+        </div>
+      </div>
+      <div class="mock-panel">
+        <div class="queue-list">
+          <article class="queue-item"><span>1</span><div><strong>Daily Wordle</strong><small>Continue from any server</small></div><code>live</code></article>
+          <article class="queue-item"><span>2</span><div><strong>Who's That Pokemon</strong><small>Hints, reveal, silhouettes</small></div><code>game</code></article>
+          <article class="queue-item"><span>3</span><div><strong>Pet Fight</strong><small>Challenge another collector</small></div><code>pvp</code></article>
+          <article class="queue-item"><span>4</span><div><strong>Counting Channel</strong><small>Server goals and rewards</small></div><code>team</code></article>
+          <article class="queue-item"><span>5</span><div><strong>Lottery</strong><small>Weekly and event jackpots</small></div><code>coins</code></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="commands" class="section">
+      <div class="section-head">
+        <div class="section-kicker">Command preview</div>
+        <h2>Simple commands, <em>big server energy.</em></h2>
+        <p class="section-copy">A few examples from the public command list imported to Discord and Top.gg.</p>
+      </div>
+      <div class="command-grid">
+        <article class="command-card"><code>/pet</code><span>Open the pet management panel and take care of your current companion.</span></article>
+        <article class="command-card"><code>/quests</code><span>View daily quests and progress toward bonus coins.</span></article>
+        <article class="command-card"><code>/cute</code><span>Pull safe cute posts from selected Reddit communities with a next button.</span></article>
+        <article class="command-card"><code>/movie poll</code><span>Start a movie-night poll based on a movie seed.</span></article>
+        <article class="command-card"><code>/counting setup</code><span>Configure a counting channel, goals, resumes, emojis, and leaderboards.</span></article>
+        <article class="command-card"><code>/leaderboard</code><span>Show server or global rankings for coins, XP, streaks, games, and achievements.</span></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="section-kicker">Coverage</div>
+        <h2>More than games. <em>More than chat.</em></h2>
+      </div>
+      <div class="platform-grid">
+        <article class="platform-card">Pets<span>Ready</span></article>
+        <article class="platform-card">Economy<span>Ready</span></article>
+        <article class="platform-card">Anime<span>Ready</span></article>
+        <article class="platform-card">Movies<span>Ready</span></article>
+        <article class="platform-card">Word Games<span>Ready</span></article>
+        <article class="platform-card">Dashboard<span>Ready</span></article>
+      </div>
+    </section>
+
+    <section id="faq" class="section">
+      <div class="section-head">
+        <div class="section-kicker">FAQ</div>
+        <h2>Setup questions, <em>answered fast.</em></h2>
+      </div>
+      <div class="faq-grid">
+        <article class="faq-card"><h3>Why are slash commands not appearing?</h3><p>Discord can take time to propagate commands. Re-invite with application command scope or wait a little after updates.</p></article>
+        <article class="faq-card"><h3>How do I make the bot talk in one channel?</h3><p>Use the talk channel setup command or admin dashboard so chat behavior stays contained to the channel you choose.</p></article>
+        <article class="faq-card"><h3>Does Meow Bot support private reminders?</h3><p>Yes. Reminder DMs and daily quest completion notices can be toggled by users.</p></article>
+        <article class="faq-card"><h3>Can I control update posts?</h3><p>Yes. Configure announcement and update channels, then use the owner tools for saved changelogs and announcements.</p></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="cta-panel">
+        <div>
+          <h2>Ready to wake up your server?</h2>
+          <p>Invite Meow Bot, pick a few setup channels, and let your members start earning, playing, collecting, voting, and causing carefully supervised cat chaos.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="button-primary" data-app-link="invite" href="https://discord.com/oauth2/authorize?client_id=1488940777190199386" target="_blank" rel="noopener noreferrer">Invite Meow Bot</a>
+          <a class="button-secondary" data-app-link="support" href="https://www.patreon.com/cw/FluffyThePenguin/membership" target="_blank" rel="noopener noreferrer">Support</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-col">
+        <a class="brand" href="/"><img src="favicon.png?v=5" alt="Meow Bot logo" decoding="async"><span>Meow Bot</span></a>
+        <p>Cat personality, server games, pets, economy, and community tools for Discord.</p>
+      </div>
+      <div class="footer-col"><strong>Product</strong><a href="commands.html">Commands</a><a href="games.html">Games</a><a href="premium.html">Premium</a></div>
+      <div class="footer-col"><strong>Community</strong><a data-app-link="discord" href="https://discord.gg/8aeWmjAd" target="_blank" rel="noopener noreferrer">Support Server</a><a data-app-link="vote" href="https://top.gg/bot/1488940777190199386" target="_blank" rel="noopener noreferrer">Vote on Top.gg</a></div>
+      <div class="footer-col"><strong>Legal</strong><a href="legal.html#terms">Terms</a><a href="legal.html#privacy">Privacy</a><a href="support.html">Contact</a></div>
+    </footer>
+
+    <section id="legal" class="legal-section" aria-label="Legal and contact">
+      <details>
+        <summary>Terms of Service</summary>
+        <p>Use Meow Bot respectfully and follow Discord's terms. Server owners are responsible for configuring channels, permissions, and feature access appropriately. Abuse, spam, exploit attempts, or attempts to disrupt the service may result in blocks.</p>
+      </details>
+      <details>
+        <summary>Privacy Policy</summary>
+        <p>Meow Bot stores only data needed for bot features, such as user IDs, server IDs, coins, XP, game stats, preferences, pet data, and configured channels. Use <code>/mydata</code> for data controls where available.</p>
+      </details>
+      <details>
+        <summary>Contact</summary>
+        <p>For help, setup questions, bug reports, or feature requests, join the support server or email <a href="mailto:thepenguinfluffy@gmail.com">thepenguinfluffy@gmail.com</a>.</p>
+      </details>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var themeKey = "meow-bot-theme";
+      var themeToggle = document.getElementById("themeToggle");
+      var menuToggle = document.getElementById("menuToggle");
+      var nav = document.getElementById("siteNav");
+      var themeChannel = null;
+      try {
+        themeChannel = "BroadcastChannel" in window ? new BroadcastChannel("meow-bot-theme") : null;
+      } catch (_) {}
+
+      function normalizeTheme(theme) {
+        return ["light", "dark", "pure-dark"].indexOf(theme) === -1 ? "dark" : theme;
+      }
+
+      function nextTheme(theme) {
+        var currentTheme = normalizeTheme(theme);
+        if (currentTheme === "light") return "dark";
+        if (currentTheme === "dark") return "pure-dark";
+        return "light";
+      }
+
+      function themeLabel(theme) {
+        var next = nextTheme(theme);
+        return next === "pure-dark" ? "Pure dark" : next.charAt(0).toUpperCase() + next.slice(1);
+      }
+
+      function setTheme(theme, options) {
+        var config = options || {};
+        var nextThemeValue = normalizeTheme(theme);
+        document.documentElement.setAttribute("data-theme", nextThemeValue);
+        if (localStorage.getItem(themeKey) !== nextThemeValue) localStorage.setItem(themeKey, nextThemeValue);
+        if (themeToggle) themeToggle.textContent = themeLabel(nextThemeValue);
+        if (config.broadcast !== false && themeChannel) themeChannel.postMessage(nextThemeValue);
+      }
+
+      function syncStoredTheme() {
+        setTheme(normalizeTheme(localStorage.getItem(themeKey)), { broadcast: false });
+      }
+
+      setTheme(document.documentElement.getAttribute("data-theme"));
+      if (themeToggle) themeToggle.addEventListener("click", function () {
+        setTheme(nextTheme(document.documentElement.getAttribute("data-theme")));
+      });
+      window.addEventListener("storage", function (event) {
+        if (event.key === themeKey) setTheme(event.newValue, { broadcast: false });
+      });
+      if (themeChannel) themeChannel.addEventListener("message", function (event) {
+        setTheme(event.data, { broadcast: false });
+      });
+      window.addEventListener("focus", syncStoredTheme);
+      window.addEventListener("pageshow", syncStoredTheme);
+      document.addEventListener("visibilitychange", function () {
+        if (!document.hidden) syncStoredTheme();
+      });
+      if (menuToggle && nav) menuToggle.addEventListener("click", function () {
+        var open = nav.classList.toggle("is-open");
+        menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      document.querySelectorAll(".nav-links a").forEach(function (link) {
+        link.addEventListener("click", function () {
+          if (nav) nav.classList.remove("is-open");
+          if (menuToggle) menuToggle.setAttribute("aria-expanded", "false");
+        });
+      });
+
+      function endpointList(pathname) {
+        var endpoints = [];
+        function add(url) { if (url && endpoints.indexOf(url) === -1) endpoints.push(url); }
+        if (window.MEOW_STATS_API_BASE) add(String(window.MEOW_STATS_API_BASE).replace(/\/$/, "") + pathname);
+        if (window.location.protocol !== "file:") add(window.location.origin.replace(/\/$/, "") + pathname);
+        if (window.location.protocol === "file:" || /^(localhost|127\.0\.0\.1)$/i.test(window.location.hostname)) add("http://127.0.0.1:3001" + pathname);
+        return endpoints;
+      }
+
+      function formatCount(value) {
+        var number = Number(value) || 0;
+        if (number >= 1000000) return (number / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+        if (number >= 1000) return (number / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+        return String(number);
+      }
+
+      function applyLinks(appLinks) {
+        if (!appLinks || typeof appLinks !== "object") return;
+        document.querySelectorAll("[data-app-link]").forEach(function (element) {
+          var key = element.getAttribute("data-app-link");
+          if (key && appLinks[key]) element.setAttribute("href", String(appLinks[key]));
+        });
+      }
+
+      async function fetchFirstJson(pathname) {
+        var endpoints = endpointList(pathname);
+        for (var i = 0; i < endpoints.length; i += 1) {
+          try {
+            var response = await fetch(endpoints[i], { headers: { "Accept": "application/json" } });
+            if (!response.ok) continue;
+            return await response.json();
+          } catch (_) {}
+        }
+        return null;
+      }
+
+      async function hydrateStats() {
+        var stats = await fetchFirstJson("/api/stats");
+        if (!stats) return;
+        document.querySelectorAll("[data-live-stat]").forEach(function (element) {
+          var key = element.getAttribute("data-live-stat");
+          if (Object.prototype.hasOwnProperty.call(stats, key)) element.textContent = formatCount(stats[key]);
+        });
+        applyLinks(stats.appLinks);
+      }
+
+      async function hydrateLinks() {
+        var data = await fetchFirstJson("/api/links");
+        if (data && data.links) applyLinks(data.links);
+      }
+
+      async function hydrateStatus() {
+        var dot = document.getElementById("botStatusDot");
+        var text = document.getElementById("botStatusText");
+        var health = await fetchFirstJson("/api/health");
+        var status = health && health.status ? String(health.status) : "offline";
+        if (dot) {
+          dot.classList.toggle("is-online", status === "ok");
+          dot.classList.toggle("is-degraded", status === "degraded");
+        }
+        if (text) text.textContent = status === "ok" ? "Online" : status === "degraded" ? "Degraded" : "Offline";
+      }
+
+      hydrateLinks();
+      hydrateStats();
+      hydrateStatus();
+      window.setInterval(hydrateStatus, 60000);
+    }());
+  </script>
+</body>
+</html>
