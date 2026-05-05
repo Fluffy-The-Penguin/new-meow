@@ -509,11 +509,11 @@
       <span>Meow Bot</span>
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="commands.html">Commands</a>
-      <a href="games.html">Games</a>
-      <a href="premium.html">Premium</a>
-      <a href="support.html">Support</a>
-      <a href="legal.html">Legal</a>
+      <a href="/commands">Commands</a>
+      <a href="/games">Games</a>
+      <a href="/premium">Premium</a>
+      <a href="/support">Support</a>
+      <a href="/legal">Legal</a>
     </div>
     <div class="nav-actions">
       <button class="menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu" aria-expanded="false">=</button>
@@ -607,7 +607,7 @@
         <p class="section-copy">Games are not isolated toys. Meow Bot connects them to coins, quests, achievements, pets, counting goals, leaderboards, and server events so every round can matter.</p>
         <div class="hero-actions">
           <a class="button-primary" data-app-link="invite" href="https://discord.com/oauth2/authorize?client_id=1488940777190199386" target="_blank" rel="noopener noreferrer">Add to Server</a>
-          <a class="button-secondary" href="commands.html">See Commands</a>
+          <a class="button-secondary" href="/commands">See Commands</a>
         </div>
       </div>
       <div class="mock-panel">
@@ -681,11 +681,11 @@
 
     <footer class="footer">
       <div class="footer-col"><a class="brand" href="/"><img src="favicon.png?v=5" alt="Meow Bot logo" decoding="async"><span>Meow Bot</span></a><p>Cat personality, server games, pets, economy, and community tools for Discord.</p><div class="social-row"><a class="social-link" data-app-link="discord" href="https://discord.gg/8aeWmjAd" target="_blank" rel="noopener noreferrer">D</a><a class="social-link" data-app-link="vote" href="https://top.gg/bot/1488940777190199386" target="_blank" rel="noopener noreferrer">T</a><a class="social-link" data-app-link="support" href="https://www.patreon.com/cw/FluffyThePenguin/membership" target="_blank" rel="noopener noreferrer">P</a></div></div>
-      <div class="footer-col"><strong>Product</strong><a href="commands.html">Commands</a><a href="games.html">Games</a><a href="premium.html">Premium</a><a href="#features">Features</a></div>
-      <div class="footer-col"><strong>Resources</strong><a href="support.html">Setup Help</a><a href="commands.html">Command Directory</a><a href="#faq">FAQ</a><a data-app-link="discord" href="https://discord.gg/8aeWmjAd" target="_blank" rel="noopener noreferrer">Support Server</a></div>
-      <div class="footer-col"><strong>Community</strong><a data-app-link="discord" href="https://discord.gg/8aeWmjAd" target="_blank" rel="noopener noreferrer">Discord</a><a data-app-link="vote" href="https://top.gg/bot/1488940777190199386" target="_blank" rel="noopener noreferrer">Vote on Top.gg</a><a href="premium.html">Support Development</a></div>
-      <div class="footer-col"><strong>Company</strong><a href="support.html">Contact</a><a href="premium.html">Support</a><a href="#home">About Meow Bot</a></div>
-      <div class="footer-col"><strong>Legal</strong><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="support.html">Contact</a></div>
+      <div class="footer-col"><strong>Product</strong><a href="/commands">Commands</a><a href="/games">Games</a><a href="/premium">Premium</a><a href="/#features">Features</a></div>
+      <div class="footer-col"><strong>Resources</strong><a href="/support">Setup Help</a><a href="/commands">Command Directory</a><a href="/#faq">FAQ</a><a data-app-link="discord" href="https://discord.gg/8aeWmjAd" target="_blank" rel="noopener noreferrer">Support Server</a></div>
+      <div class="footer-col"><strong>Community</strong><a data-app-link="discord" href="https://discord.gg/8aeWmjAd" target="_blank" rel="noopener noreferrer">Discord</a><a data-app-link="vote" href="https://top.gg/bot/1488940777190199386" target="_blank" rel="noopener noreferrer">Vote on Top.gg</a><a href="/premium">Support Development</a></div>
+      <div class="footer-col"><strong>Company</strong><a href="/support">Contact</a><a href="/premium">Support</a><a href="/#home">About Meow Bot</a></div>
+      <div class="footer-col"><strong>Legal</strong><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/support">Contact</a></div>
       <div class="footer-bottom"><span>© 2026 Meow Bot. All rights reserved.</span><span>Made for Discord communities that like cats and chaos.</span></div>
     </footer>
 
@@ -892,7 +892,7 @@
       }
 
       async function hydrateStats() {
-        var stats = await fetchFirstJson("/api/stats");
+        var stats = await fetchFirstJson("/api/stats?t=" + Date.now());
         if (!stats) return;
         document.querySelectorAll("[data-live-stat]").forEach(function (element) {
           var key = element.getAttribute("data-live-stat");
@@ -913,12 +913,12 @@
       }
 
       async function hydrateLinks() {
-        var data = await fetchFirstJson("/api/links");
-        if (data && data.links) applyLinks(data.links);
+        var data = await fetchFirstJson("/api/links?t=" + Date.now());
+        if (data) applyLinks(data.appLinks || data.links);
       }
 
       async function hydrateStatus() {
-        var health = await fetchFirstJson("/api/health");
+        var health = await fetchFirstJson("/api/health?t=" + Date.now());
         var state = getBotStatusState(health);
         updateBotStatus(state.className, state.label);
       }
@@ -927,7 +927,9 @@
       hydrateStats();
       hydrateTopServers();
       hydrateStatus();
+      window.setInterval(hydrateStats, 60000);
       window.setInterval(hydrateStatus, 60000);
+      window.setInterval(hydrateTopServers, 300000);
     }());
   </script>
 </body>
