@@ -1,12 +1,12 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/api/stats", "destination": "http://dashboard-meowbot.duckdns.org:21448/api/stats" },
-    { "source": "/api/top-servers", "destination": "http://dashboard-meowbot.duckdns.org:21448/api/top-servers" },
-    { "source": "/api/links", "destination": "http://dashboard-meowbot.duckdns.org:21448/api/links" },
-    { "source": "/api/health", "destination": "http://dashboard-meowbot.duckdns.org:21448/api/health" },
-    { "source": "/api/changelogs", "destination": "http://dashboard-meowbot.duckdns.org:21448/api/changelogs" },
-    { "source": "/api/announcements", "destination": "http://dashboard-meowbot.duckdns.org:21448/api/announcements" },
-    { "source": "/api/updates", "destination": "http://dashboard-meowbot.duckdns.org:21448/api/updates" }
+    { "source": "/api/stats", "destination": "https://meow-bot.apps.bot-hosting.cloud/api/stats" },
+    { "source": "/api/top-servers", "destination": "https://meow-bot.apps.bot-hosting.cloud/api/top-servers" },
+    { "source": "/api/links", "destination": "https://meow-bot.apps.bot-hosting.cloud/api/links" },
+    { "source": "/api/health", "destination": "https://meow-bot.apps.bot-hosting.cloud/api/health" },
+    { "source": "/api/changelogs", "destination": "https://meow-bot.apps.bot-hosting.cloud/api/changelogs" },
+    { "source": "/api/announcements", "destination": "https://meow-bot.apps.bot-hosting.cloud/api/announcements" },
+    { "source": "/api/updates", "destination": "https://meow-bot.apps.bot-hosting.cloud/api/updates" }
   ]
 }
